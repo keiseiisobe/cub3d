@@ -8,8 +8,13 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	mlx_close(void)
+int	hook_handler(int keycode, t_param *param)
 {
-	printf("exit\n");
-	exit(0);
+	(void)param;
+	if (keycode == ESC)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	return (0);
 }

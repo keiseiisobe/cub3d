@@ -10,12 +10,14 @@
 # include <math.h>
 # include <errno.h>
 
-# include "../mlx/mlx.h"
+# include "../minilibx-mms/mlx.h"
 
 # include "xmalloc.h"
 # include "get_next_line.h"
 
 # define WALL_SIZE_WEIGHT 200
+
+# define ESC 53
 
 typedef struct	s_data
 {
@@ -47,6 +49,12 @@ typedef struct	s_map_info
 	// ceiling color
 	// floor color
 }	t_map_info;
+
+typedef struct	s_param
+{
+	t_mlx_info	*mlx_info;
+	t_map_info	*map_info;
+}	t_param;
 
 enum wall_side
 {
@@ -89,14 +97,14 @@ void	get_map_info(t_map_info *map_info, char *filename);
 void	initialize_mlx(t_mlx_info *mlx_info);
 
 // game.c
-void	game_loop(t_mlx_info *mlx_info, t_map_info *map_info);
+void	game(t_param *param);
 
 // draw.c
 void	draw_loop(t_mlx_info *mlx_info, t_map_info *map_info, t_player_info *player_info);
 
 // mlx_utils.c
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		mlx_close(void);
+int		hook_handler(int keycode, t_param *param);
 
 // error.c
 void	handle_error(bool is_error);

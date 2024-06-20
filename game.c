@@ -71,17 +71,11 @@ void	get_player_initial_info(t_player_info *player_info, t_map_info *map_info)
 	}
 }
 
-void	game_loop(t_mlx_info *mlx_info, t_map_info *map_info)
+void	game(t_param *param)
 {
 	t_player_info	player_info;
 
-	(void)map_info;
-	get_player_initial_info(&player_info, map_info);
-	draw_loop(mlx_info, map_info, &player_info);
-
-	my_mlx_pixel_put(&mlx_info->img_data, 100, 100, 0x0000FF00);
-
-	mlx_put_image_to_window(mlx_info->mlx, mlx_info->mlx_win, mlx_info->img_data.img, 0, 0);
-	mlx_hook(mlx_info->mlx_win, 2, 1L<<0, mlx_close, NULL); // some memory that should be freed will be taken as parameter.
-	mlx_loop(mlx_info->mlx);
+	get_player_initial_info(&player_info, param->map_info);
+	draw_loop(param->mlx_info, param->map_info, &player_info);
+	mlx_put_image_to_window(param->mlx_info->mlx, param->mlx_info->mlx_win, param->mlx_info->img_data.img, 0, 0);
 }
