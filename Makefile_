@@ -1,0 +1,27 @@
+NAME = fractol
+INCDIR = include/
+SRC = cub3d.c get_map.c init_mlx.c game.c draw.c error/error.c error/err_if_something1.c error/err_if_something2.c error/ft_err_printf.c error/ft_err_put_something1.c error/ft_err_put_something2.c\
+		arg.c xmalloc.c mlx_utils.c\
+		libft/get_next_line.c libft/get_next_line_utils.c
+OBJ = ${SRC:.c=.o}
+
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+
+.c.o:
+	${CC} ${CFLAGS} -Imlx -o $@ -c $< -I ${INCDIR}
+  
+${NAME}: ${OBJ}
+	${CC} ${CFLAGS} $(OBJ) -L /usr/X11R6/lib -lmlx -lXext -lX11 -framework OpenGL -framework AppKit -o ${NAME}
+
+all: ${NAME}
+
+clean:
+	rm -f ${OBJ}
+
+fclean: clean
+	rm -f ${NAME}
+
+re: fclean ${NAME}
+
+.PHONY: all clean fclean re
