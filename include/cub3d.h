@@ -19,6 +19,9 @@
 
 # define ESC 53
 
+# define X 1
+# define Y 2
+
 typedef struct	s_data
 {
 	void	*img;
@@ -82,12 +85,12 @@ typedef struct s_player_info
 }	t_player_info;
 
 // use it in hook handler
-typedef struct	s_param
+typedef struct	s_cub3d
 {
-	t_mlx_info		*mlx_info;
-	t_map_info		*map_info;
-	t_player_info	*player_info;
-}	t_param;
+	t_mlx_info		mlx_info;
+	t_map_info		map_info;
+	t_player_info	player_info;
+}	t_cub3d;
 
 // arg.c
 void	is_arg_valid(int argc, char *argv[]);
@@ -102,14 +105,24 @@ void	get_player_initial_info(t_player_info *player_info, t_map_info *map_info);
 void	initialize_mlx(t_mlx_info *mlx_info);
 
 // game.c
-void	game(t_param *param);
+void	game(t_cub3d *info);
 
 // draw.c
 void	draw_loop(t_mlx_info *mlx_info, t_map_info *map_info, t_player_info *player_info);
 
 // mlx_utils.c
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		hook_handler(int keycode, t_param *param);
+
+// event.c
+int		event_handler(int keycode, t_cub3d *info);
+
+// move.c
+void	walk_forward(t_player_info *player_info, char **map);
+void	walk_backward(t_player_info *player_info, char **map);
+void	walk_left(t_player_info *player_info, char **map);
+void	walk_right(t_player_info *player_info, char **map);
+void	turn_left(t_player_info *player_info);
+void	turn_right(t_player_info *player_info);
 
 // error.c
 void	handle_error(bool is_error);
