@@ -5,4 +5,5 @@ to kmiyazawa:
 	Implemented event hook(W, A, S, D, ->, <-),
 	floor and ceiling color,
 	wall collisions.
+        added event.c and move.c
 
