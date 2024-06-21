@@ -1,5 +1,5 @@
 NAME = cub3d
-SRCS = cub3d.c get_map.c init_mlx.c game.c draw.c error.c\
+SRCS = cub3d.c get_map.c get_player.c init_mlx.c game.c draw.c error.c\
 		arg.c xmalloc.c mlx_utils.c\
 		get_next_line.c get_next_line_utils.c\
 		ft_err_printf.c\

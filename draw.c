@@ -18,8 +18,6 @@ void	draw_vertical_line(t_data *data, size_t win_height, size_t wall_height, siz
 	size_t	begin_y;
 	size_t	current_height;
 
-	(void)data;
-	(void)color;
 	begin_x = i;
 	begin_y = (win_height / 2) - (wall_height / 2);
 	current_height = 0;
@@ -37,7 +35,6 @@ void	draw_loop(t_mlx_info *mlx_info, t_map_info *map_info, t_player_info *player
 	size_t	wall_height;
 	int		color;
 
-	(void)map_info;
 	i = 0;
 	while(i < mlx_info->win_width)
 	{

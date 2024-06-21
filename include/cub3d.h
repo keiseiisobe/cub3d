@@ -50,12 +50,6 @@ typedef struct	s_map_info
 	// floor color
 }	t_map_info;
 
-typedef struct	s_param
-{
-	t_mlx_info	*mlx_info;
-	t_map_info	*map_info;
-}	t_param;
-
 enum wall_side
 {
 	NORTH,
@@ -87,11 +81,22 @@ typedef struct s_player_info
 	double	perpendicular_distance_to_wall;
 }	t_player_info;
 
+// use it in hook handler
+typedef struct	s_param
+{
+	t_mlx_info		*mlx_info;
+	t_map_info		*map_info;
+	t_player_info	*player_info;
+}	t_param;
+
 // arg.c
 void	is_arg_valid(int argc, char *argv[]);
 
 // get_map.c
 void	get_map_info(t_map_info *map_info, char *filename);
+
+// get_player.c
+void	get_player_initial_info(t_player_info *player_info, t_map_info *map_info);
 
 // init.c
 void	initialize_mlx(t_mlx_info *mlx_info);

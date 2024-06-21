@@ -2,8 +2,9 @@
 
 int	main(int argc, char *argv[])
 {
-	t_mlx_info	mlx_info;
-	t_map_info	map_info;
+	t_mlx_info		mlx_info;
+	t_map_info		map_info;
+	t_player_info	player_info;
 	t_param		param;
 
 // arg.c
@@ -12,12 +13,16 @@ int	main(int argc, char *argv[])
 // get_map.c
 	get_map_info(&map_info, argv[1]);
 
+// get_player.c
+	get_player_initial_info(&player_info, &map_info);
+
 // init.c
 	initialize_mlx(&mlx_info);
 
 // draw.c
 	param.mlx_info = &mlx_info;
 	param.map_info = &map_info;
+	param.player_info = &player_info;
 	game(&param);
 
 // hook and loop
