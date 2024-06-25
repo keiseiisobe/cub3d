@@ -17,6 +17,8 @@ SRC = main.c \
 OBJ = ${SRC:.c=.o}
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+CFLAGS += -g
+CFLAGS += -fsanitize=address
 
 .c.o:
 	${CC} ${CFLAGS} -Imlx -o $@ -c $< -I ${INCDIR}
@@ -34,8 +36,12 @@ fclean: clean
 
 re: fclean ${NAME}
 
-j: ${NAME}
+simple: ${NAME}
 	rm -rf ${OBJ}
-	./cub3d scene_files/simple.cub
+	./cub3d maps/simple.cub
+
+min: ${NAME}
+	rm -rf ${OBJ}
+	./cub3d maps/minimalist.cub
 
 .PHONY: all clean fclean re

@@ -87,8 +87,8 @@ typedef struct s_player_info
 // use it in hook handler
 typedef struct	s_cub3d
 {
-	t_mlx_info		mlx_info;
 	t_map_info		map_info;
+	t_mlx_info		mlx_info;
 	t_player_info	player_info;
 }	t_cub3d;
 
