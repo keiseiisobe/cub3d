@@ -1,4 +1,4 @@
-#include "include/cub3d.h"
+#include "cub3d.h"
 
 void	is_arg_valid(int argc, char *argv[])
 {
