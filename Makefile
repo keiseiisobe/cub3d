@@ -1,6 +1,6 @@
 NAME = cub3d
 INCDIR = include/
-SRC = cub3d.c \
+SRC = main.c \
 		get_map.c \
 		get_player.c \
 		event.c \
@@ -15,7 +15,6 @@ SRC = cub3d.c \
 		libft/get_next_line.c \
 		libft/get_next_line_utils.c
 OBJ = ${SRC:.c=.o}
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
