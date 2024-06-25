@@ -8,7 +8,7 @@ SRC = main.c \
 		init_mlx.c \
 		game.c \
 		draw.c \
-		error/error.c \
+		error.c \
 		arg.c \
 		xmalloc.c \
 		mlx_utils.c \

@@ -42,6 +42,7 @@ typedef struct	s_mlx_info
 
 typedef struct	s_map_info
 {
+	char	**input;
 	char	**map;
 	size_t	map_height;
 	size_t	map_width;
