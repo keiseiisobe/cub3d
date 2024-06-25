@@ -11,8 +11,6 @@
 // error.c
 void	handle_error(bool is_error);
 
-// ft_err_printf.c
-int		ft_err_printf(const char *str, ...);
 int		err_if_char(va_list ap);
 int		err_if_char_p(va_list ap);
 int		err_if_void_p(va_list ap);

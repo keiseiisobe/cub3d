@@ -1,32 +1,42 @@
 NAME = cub3d
-SRCS = cub3d.c get_map.c get_player.c init_mlx.c game.c draw.c error.c\
-		event.c move.c arg.c xmalloc.c mlx_utils.c\
-		get_next_line.c get_next_line_utils.c\
-		ft_err_printf.c\
-		err_if_something1.c err_if_something2.c\
-		ft_err_put_something1.c ft_err_put_something2.c
-OBJS_DIR = object
-OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
+INCDIR = include/
+SRC = cub3d.c \
+		get_map.c \
+		get_player.c \
+		event.c \
+		move.c \
+		init_mlx.c \
+		game.c \
+		draw.c \
+		error/error.c \
+		arg.c \
+		xmalloc.c \
+		mlx_utils.c \
+		libft/get_next_line.c \
+		libft/get_next_line_utils.c
+OBJ = ${SRC:.c=.o}
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX_LIB = -L./ -lmlx
-MLX_INCLUDE = -Imlx
-LINK_FW = -framework OpenGL -framework AppKit
 
-vpath % error libft
+.c.o:
+	${CC} ${CFLAGS} -Imlx -o $@ -c $< -I ${INCDIR}
 
-$(OBJS_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(MLX_INCLUDE) -c $< -o $@
+${NAME}: ${OBJ}
+	${CC} ${CFLAGS} $(OBJ) -L /usr/X11R6/lib -lmlx -lXext -lX11 -framework OpenGL -framework AppKit -o ${NAME}
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(MLX_LIB) $(LINK_FW) $(OBJS) -o $(NAME)
-
-all: $(NAME)
+all: ${NAME}
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf ${OBJ}
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf ${NAME}
 
-re: fclean all
+re: fclean ${NAME}
+
+j: ${NAME}
+	rm -rf ${OBJ}
+	./cub3d scene_files/simple.cub
+
+.PHONY: all clean fclean re
