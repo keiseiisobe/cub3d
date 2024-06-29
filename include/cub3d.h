@@ -10,7 +10,8 @@
 # include <math.h>
 # include <errno.h>
 
-# include "../minilibx-mms/mlx.h"
+//# include "../minilibx_mms_20200219/mlx.h"
+# include "mlx.h"
 
 # include "xmalloc.h"
 # include "get_next_line.h"
