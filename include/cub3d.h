@@ -117,6 +117,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 // event.c
 int		event_handler(int keycode, t_cub3d *info);
+int		X_bottun_handler(t_cub3d *info);
 
 // move.c
 void	walk_forward(t_player_info *player_info, char **map);

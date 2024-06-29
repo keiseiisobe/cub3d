@@ -7,8 +7,6 @@ make
 ```
 ## arguments
 *.cub  <a map cosists of the following elements>
-- 0 : empty space
-- 1 : wall
 
 ## OK functions
 - open
@@ -33,10 +31,14 @@ make
 	- 天井と床の色は、互いに違う二色
 		- RGBで指定される
 - window関連
-	- <- -> で視点移動
-	- W, A, S, D で移動
-	- ESC でwindowを閉じて、プログラム終了(cleanly)
-	- x でwindowを閉じて、プログラム終了(cleanly)
+	- [x] <- -> で視点移動
+		- 現状は90度回転
+		- 余裕があれば回転角度を小さくしたら面白い？
+	- [x] W, A, S, D で移動
+	- [ ] ESC でwindowを閉じて、プログラム終了(cleanly)
+		- cleanかどうかのチェック必須
+	- [ ] x でwindowを閉じて、プログラム終了(cleanly)
+		- cleanかどうかのチェック必須
 - マップ関連
 	- マップが壁で囲まれてるチェック
 	- 地図以外は、空行で区切れる　＝＞　空行を適切に無視する
@@ -61,4 +63,8 @@ make
 - ブランチを分けました。
 - 分けたブランチの先で、ft_err_printfをprintfに置き換えました。
 
+### 2024/06/29 kmiyazaw
+- kmiyazaw_inputChecker ブランチを作成しました。
+	- マップの入力チェックを行う関数を追加する予定です
+- kmiyazaw_def ブランチを整理し、pull requestを出しました。
 
