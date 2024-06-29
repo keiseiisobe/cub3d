@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-size_t	get_map_height(char *filename)
+size_t	get_input_height(char *filename)
 {
 	int		fd;
 	char	*line;
@@ -21,75 +21,126 @@ size_t	get_map_height(char *filename)
 	return (height);
 }
 
-size_t	get_map_width(char *filename)
+char	**get_input(char *filename, size_t height)
 {
 	int		fd;
 	char	*line;
-	size_t	width;
-
-	fd = open(filename, O_RDONLY);
-	handle_error(fd < 0);
-	width = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (width < strlen(line) - 1) // "-1" can remove new line.
-			width = strlen(line) - 1; // but, need to handle when there is no new line.
-		free(line);
-	}
-	close(fd);
-	return (width);
-}
-
-char	*ft_strdup(char *str)
-{
-	size_t	count;
-	char	*ptr;
-
-	count = 0;
-	while (str[count])
-		count++;
-	if (str == NULL)
-		return (0);
-	ptr = (char *)xmalloc(sizeof(char) * (count + 1));
-	count = 0;
-	if (ptr != NULL)
-	{
-		while (str[count] != '\0')
-		{
-			ptr[count] = str[count];
-			count++;
-		}
-		ptr[count] = '\0';
-	}
-	return (ptr);
-}
-
-
-//open close するのは一回だけにしたい。
-//その他、情報をうまく保持できるよう、データ構造自体から変えたい。
-void	get_map_info(t_map_info *map_info, char *filename)
-{
-	int		fd;
-	char	*line;
+	char	**input;
 	size_t	i;
 
-	map_info->map_height = get_map_height(filename);
-	map_info->map_width = get_map_width(filename);
 	fd = open(filename, O_RDONLY);
 	handle_error(fd < 0);
-	map_info->map = xmalloc((map_info->map_height + 1) * sizeof(char *));
+	input = xmalloc((height + 1) * sizeof(char *));
 	i = 0;
-	while (i < map_info->map_height)
+	while (i < height)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		map_info->map[i++] = ft_strdup(line); // have to handle the space in tetris shape map.
+		input[i++] = ft_strdup(line);
 		free(line);
 	}
-	map_info->map[i] = NULL;
+	input[i] = NULL;
 	close(fd);
+	return (input);
+}
+
+void	get_surface_textures(t_map_info *map_info)
+{
+	size_t	i;
+	size_t	k;
+	size_t	info_count;
+	char	**splited_line;
+	char	**rgb_splited_line;
+
+	i = -1;
+	info_count = 0;
+	while (info_count < 6)
+	{
+		i++;
+		if (map_info->input_[i][0] == '\n')
+			continue ;
+		splited_line = ft_split(map_info->input_[i], ' ');
+		if (splited_line[0][0] == 'N')
+			map_info->no_texture_ = ft_strdup(splited_line[1]);
+		else if (splited_line[0][0] == 'S')
+			map_info->so_texture_ = ft_strdup(splited_line[1]);
+		else if (splited_line[0][0] == 'W')
+			map_info->we_texture_ = ft_strdup(splited_line[1]);
+		else if (splited_line[0][0] == 'E')
+			map_info->ea_texture_ = ft_strdup(splited_line[1]);
+		else if (splited_line[0][0] == 'C')
+		{
+			rgb_splited_line = ft_split(splited_line[1], ',');
+			map_info->ceiling_color[0] = ft_atoi(rgb_splited_line[0]);
+			map_info->ceiling_color[1] = ft_atoi(rgb_splited_line[1]);
+			map_info->ceiling_color[2] = ft_atoi(rgb_splited_line[2]);
+		}
+		else if (splited_line[0][0] == 'F')
+		{
+			rgb_splited_line = ft_split(splited_line[1], ',');
+			map_info->floor_color[0] = ft_atoi(rgb_splited_line[0]);
+			map_info->floor_color[1] = ft_atoi(rgb_splited_line[1]);
+			map_info->floor_color[2] = ft_atoi(rgb_splited_line[2]);
+		}
+		if (splited_line[0][0] == 'C' || splited_line[0][0] == 'F')
+		{
+			k = 0;
+			while (rgb_splited_line[k])
+			{
+				free(rgb_splited_line[k]);
+				k++;
+			}
+			free(rgb_splited_line);
+		}
+		k = 0;
+		while (splited_line[k])
+		{
+			free(splited_line[k]);
+			k++;
+		}
+		free(splited_line);
+		info_count++;
+	}
+	i++;
+	while (map_info->input_[i][0] == '\n')
+		i++;
+	map_info->map_start_index = i;
+
+	printf("===== non_map info =====\n");
+	printf("NO: %s\n", map_info->no_texture_);
+	printf("SO: %s\n", map_info->so_texture_);
+	printf("WE: %s\n", map_info->we_texture_);
+	printf("EA: %s\n", map_info->ea_texture_);
+	printf("C: %d, %d, %d\n", map_info->ceiling_color[0], map_info->ceiling_color[1], map_info->ceiling_color[2]);
+	printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
+	printf("========================\n");
+	return ;
+}
+
+//open close するのは少なくしたい。
+//その他、情報をうまく保持できるよう、データ構造自体から変えたい。
+//
+//validなmapしか入ってこない前提
+void	get_map_info(t_map_info *map_info, char *filename)
+{
+	map_info->input_height = get_input_height(filename);
+	map_info->input_ = get_input(filename, map_info->input_height);
+
+	get_surface_textures(map_info);
+	map_info->map_height = map_info->input_height - map_info->map_start_index;
+	map_info->map = &map_info->input_[map_info->map_start_index + 1];
+
+	printf("=====map_info=====\n");
+	printf("input_height: %zu\n", map_info->input_height);
+	printf("map_start_index: %zu\n", map_info->map_start_index);
+	printf("map_height: %zu\n", map_info->map_height);
+	int i = 0;
+	while (map_info->map[i])
+	{
+		printf("%s\n", map_info->map[i]);
+		i++;
+	}
+	printf("==================\n");
+	return ;
 }

@@ -1,32 +1,90 @@
-NAME = cub3d
-SRCS = cub3d.c get_map.c get_player.c init_mlx.c game.c draw.c error.c\
-		event.c move.c arg.c xmalloc.c mlx_utils.c\
-		get_next_line.c get_next_line_utils.c\
-		ft_err_printf.c\
-		err_if_something1.c err_if_something2.c\
-		ft_err_put_something1.c ft_err_put_something2.c
-OBJS_DIR = object
-OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-MLX_LIB = -L./ -lmlx
-MLX_INCLUDE = -Imlx
-LINK_FW = -framework OpenGL -framework AppKit
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
+#    Updated: 2024/06/29 20:45:40 by miyazawa.ka      ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-vpath % error libft
+NAME		= cub3d
 
-$(OBJS_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(MLX_INCLUDE) -c $< -o $@
+#CC			= clang
+CC			= cc
+CFLAGS		= -O3 -Wall -Wextra -Werror
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(MLX_LIB) $(LINK_FW) $(OBJS) -o $(NAME)
+MLXFLAG		= -framework OpenGL -framework AppKit
+
+
+MLX			= libmlx.dylib
+MINILIB		= minilibx_mms_20200219
+
+FT			= libft.a
+FTLIB		= libft/
+
+
+
+INCDIR = include/
+
+SRCS = main.c \
+		get_map.c \
+		get_player.c \
+		event.c \
+		move.c \
+		init_mlx.c \
+		game.c \
+		draw.c \
+		error.c \
+		arg.c \
+		xmalloc.c \
+		mlx_utils.c \
+		gnl/get_next_line.c \
+		gnl/get_next_line_utils.c
+
+OBJS 	= $(SRCS:%.c=%.o)
 
 all: $(NAME)
 
+.c.o:
+	${CC} ${CFLAGS} -o $@ -c $< -I ${INCDIR} -I $(FTLIB) -I $(MINILIB)
+
+$(MLX) :
+	cd 	"$(PWD)/$(MINILIB)" && make
+	cd 	"$(PWD)/$(MINILIB)" && cp $(MLX) ../$(MLX)
+
+$(FT) :
+	cd 	"$(PWD)/$(FTDIR)" && make
+	cd 	"$(PWD)/$(FTDIR)" && cp $(FT) ../$(FT)
+
+$(NAME) : $(OBJS) $(MLX) $(FT)
+	$(CC) $(OBJS) $(MLX) $(FT) $(MLXFLAG) -o $(NAME)
+
 clean:
+	$(MAKE) -C $(FTLIB) clean
 	rm -rf $(OBJS)
 
 fclean: clean
+	$(MAKE) -C $(FTLIB) fclean
+	$(MAKE) -C $(MINILIB) clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+j: all
+	./cub3d maps/simple.cub
+
+min: all
+	./cub3d maps/minimalist.cub
+
+kill_mlx:
+	rm -rf $(MLX)
+	cd 	"$(PWD)/$(MINILIB)" && rm -f $(MLX)
+
+kill_ft:
+	rm -rf $(FT)
+	cd 	"$(PWD)/$(FTDIR)" && rm -f $(FT)
+
+.PHONY: all clean fclean re kill_mlx

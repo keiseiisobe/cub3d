@@ -15,6 +15,7 @@
 
 # include "xmalloc.h"
 # include "get_next_line.h"
+# include "libft.h"
 
 # define WALL_SIZE_WEIGHT 200
 
@@ -43,16 +44,21 @@ typedef struct	s_mlx_info
 
 typedef struct	s_map_info
 {
-	char	**input;
+	char	**input_;
+	size_t	input_height;
+
 	char	**map;
+	size_t	map_start_index;
 	size_t	map_height;
 	size_t	map_width;
-	// North texture
-	// South texture
-	// West texture
-	// East texture
-	// ceiling color
-	// floor color
+
+
+	char	*no_texture_; // North
+	char	*so_texture_; // South
+	char	*we_texture_; // West
+	char	*ea_texture_; // East
+	int		ceiling_color[3]; // Ceiling
+	int		floor_color[3]; // Floor
 }	t_map_info;
 
 enum wall_side
