@@ -76,3 +76,6 @@ make
 	- マップの入力チェックを行う関数を追加する予定です
 - kmiyazaw_def ブランチを整理し、pull requestを出しました。
 
+### 2024/06/30 kmiyazaw
+- kmiyazaw_inputChecker ブランチで、入力.cubが正しかった場合の、情報抽出をする関数を追加しました。
+- これにより、正しいmapしか(現状)読めなくなった。
