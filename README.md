@@ -92,3 +92,6 @@ make
 	- non_mapの情報のテクスチャの指定がvalidかどうかのチェック
 	- non_mapの情報のRGBの値がvalidかどうかのチェック
 	- mapの形がvalidかどうかのチェック
+- mallocした変数＝後々freeする必要のある変数の命名規則の追加をしたいです。
+	- 例： char **input_
+		- 変数名の最後にアンダースコアをつける
