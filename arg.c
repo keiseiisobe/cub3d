@@ -14,15 +14,14 @@ void	free_2d_char(char **str)
 //6情報全てのsuffix?があるかどうかは確認できると思う。多分
 //split後の二次元配列の情報が、１行２要素に収まってるかどうかは未チェック
 //split後のsplited_list[i][1]がtexture, RGBなのかどうか、ファイルが開けるかは未チェック
-bool	is_valid_non_map_info(char **input_)
+bool	is_valid_non_map_info(char **input_, int *map_start_index)
 {
 	size_t	i;
-	size_t	k;
 	char	**splited_line;
 	unsigned int info_flags = 0b000000; // 6桁の2進数で、各情報があるかどうかを示す
 	// 0b000000 0bNSWEFC
-	i = 0;
-	while (info_flags != 0b111111 && input_[i])
+	i = -1;
+	while (input_[++i] && info_flags != 0b111111)
 	{
 		if (input_[i][0] == '\n')
 			continue ;
@@ -33,29 +32,42 @@ bool	is_valid_non_map_info(char **input_)
 			printf("cub3d: Error: Invalid input\n");
 			return (false);
 		}
-		if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'N' && splited_line[0][1] == 'O')
+		if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'N' && splited_line[0][1] == 'O' && !(info_flags & 0b100000))
 			info_flags |= 0b100000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'S' && splited_line[0][1] == 'O')
+		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'S' && splited_line[0][1] == 'O' && !(info_flags & 0b010000))
 			info_flags |= 0b010000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'W' && splited_line[0][1] == 'E')
+		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'W' && splited_line[0][1] == 'E' && !(info_flags & 0b001000))
 			info_flags |= 0b001000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'E' && splited_line[0][1] == 'A')
+		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'E' && splited_line[0][1] == 'A' && !(info_flags & 0b000100))
 			info_flags |= 0b000100;
-		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'F')
+		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'F' && !(info_flags & 0b000010))
 			info_flags |= 0b000010;
-		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'C')
+		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'C' && !(info_flags & 0b000001))
 			info_flags |= 0b000001;
-		k = 0;
-		while (splited_line[k])
-			free(splited_line[k++]);
-		free(splited_line);
-		i++;
+		else
+		{
+			printf("cub3d: Error: Invalid input\n");
+			free_2d_char(splited_line);
+			return (false);
+		}
+		printf("info_flags: %d\n", info_flags);
+		free_2d_char(splited_line);
 	}
 	if (info_flags != 0b111111)
+	{
+		printf("here\n");
+		printf("cub3d: Error: Invalid non_map info\n");
+		return (false);
+	}
+	while (input_[i][0] == '\n')
+		i++;
+	printf("input_[i]: %s\n", input_[i]);
+	if (input_[i][0] != '1' && input_[i][0] != ' ')
 	{
 		printf("cub3d: Error: Invalid non_map info\n");
 		return (false);
 	}
+	*map_start_index = i;
 	return (true);
 }
 
@@ -67,29 +79,14 @@ bool	is_valid_map(char **map)
 	return (true);
 }
 
-bool is_valid_cub_file(char **input_, int input_height)
+bool	is_valid_cub_file(char **input_)
 {
 	char	**map;
-	int	i;
-	size_t	count6;
+	int		map_start_index;
 
-	if (!is_valid_non_map_info(input_))
+	if (!is_valid_non_map_info(input_, &map_start_index))
 		return (false);
-	i = -1;
-	count6 = 0;
-	while (i < input_height+1 && count6 < 6)
-	{
-		i++;
-		if (input_[i][0] == '\n')
-			continue ;
-		count6++;
-	}
-	i++;
-	while (input_[i][0] == '\n')
-		i++;
-	if (input_[i] == NULL)
-		return (false);
-	map = &input_[i];
+	map = &input_[map_start_index];
 	if (!is_valid_map(map))
 		return (false);
 	return (true);
@@ -109,7 +106,7 @@ void	is_arg_valid(int argc, char *argv[])
 	}
 	input_height = get_input_height(argv[1]);
 	input_ = get_input(argv[1], input_height);
-	if (!is_valid_cub_file(input_, input_height))
+	if (!is_valid_cub_file(input_))
 	{
 		i = 0;
 		while (i < input_height)
@@ -117,6 +114,5 @@ void	is_arg_valid(int argc, char *argv[])
 		free(input_);
 		exit(EXIT_SUCCESS);
 	}
-	// is_file_valid(); ex. suffix, empty, surrounded by wall
 	return ;
 }
