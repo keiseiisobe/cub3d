@@ -84,3 +84,7 @@ make
 ### 2024/06/30 kmiyazaw
 - kmiyazaw_inputChecker ブランチで、入力.cubが正しかった場合の、情報抽出をする関数を追加しました。
 - これにより、正しいmapしか(現状)読めなくなった。
+- non_mapの情報のsuffix?のチェックのみの追加なので、以下の項目は未着手です。
+	- non_mapの情報のテクスチャの指定がvalidかどうかのチェック
+	- non_mapの情報のRGBの値がvalidかどうかのチェック
+	- mapの形がvalidかどうかのチェック
