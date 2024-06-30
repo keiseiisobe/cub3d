@@ -2,7 +2,6 @@ NO ./texture/direction/std_wall_n.xpm
 SO ./texture/direction/std_wall_s.xpm
 WE ./texture/direction/std_wall_w.xpm
 EA ./texture/direction/std_wall_e.xpm
-S ./texture/barrel.xpm
 C 60,30,40
 F 220,100,0
       1
