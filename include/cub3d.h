@@ -105,6 +105,8 @@ void	is_arg_valid(int argc, char *argv[]);
 
 // get_map.c
 void	get_map_info(t_map_info *map_info, char *filename);
+size_t	get_input_height(char *filename);
+char	**get_input(char *filename, size_t height);
 
 // get_player.c
 void	get_player_initial_info(t_player_info *player_info, t_map_info *map_info);

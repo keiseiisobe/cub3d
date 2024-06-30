@@ -6,7 +6,7 @@
 #    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
-#    Updated: 2024/06/29 20:45:40 by miyazawa.ka      ###   ########.fr        #
+#    Updated: 2024/06/30 12:05:54 by miyazawa.ka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ j: all
 	./cub3d maps/simple.cub
 
 min: all
-	./cub3d maps/minimalist.cub
+	./cub3d maps/valid/minimalist.cub
 
 kill_mlx:
 	rm -rf $(MLX)

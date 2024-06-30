@@ -35,8 +35,6 @@ char	**get_input(char *filename, size_t height)
 	while (i < height)
 	{
 		line = get_next_line(fd);
-		if (!line)
-			break ;
 		input[i++] = ft_strdup(line);
 		free(line);
 	}
@@ -129,7 +127,7 @@ void	get_map_info(t_map_info *map_info, char *filename)
 
 	get_surface_textures(map_info);
 	map_info->map_height = map_info->input_height - map_info->map_start_index;
-	map_info->map = &map_info->input_[map_info->map_start_index + 1];
+	map_info->map = &map_info->input_[map_info->map_start_index];
 
 	printf("=====map_info=====\n");
 	printf("input_height: %zu\n", map_info->input_height);
