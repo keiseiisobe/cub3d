@@ -105,14 +105,14 @@ void	get_surface_textures(t_map_info *map_info)
 		i++;
 	map_info->map_start_index = i;
 
-	printf("===== non_map info =====\n");
-	printf("NO: %s\n", map_info->no_texture_);
-	printf("SO: %s\n", map_info->so_texture_);
-	printf("WE: %s\n", map_info->we_texture_);
-	printf("EA: %s\n", map_info->ea_texture_);
-	printf("C: %d, %d, %d\n", map_info->ceiling_color[0], map_info->ceiling_color[1], map_info->ceiling_color[2]);
-	printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
-	printf("========================\n");
+	//printf("===== non_map info =====\n");
+	//printf("NO: %s\n", map_info->no_texture_);
+	//printf("SO: %s\n", map_info->so_texture_);
+	//printf("WE: %s\n", map_info->we_texture_);
+	//printf("EA: %s\n", map_info->ea_texture_);
+	//printf("C: %d, %d, %d\n", map_info->ceiling_color[0], map_info->ceiling_color[1], map_info->ceiling_color[2]);
+	//printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
+	//printf("========================\n");
 	return ;
 }
 
@@ -129,16 +129,16 @@ void	get_map_info(t_map_info *map_info, char *filename)
 	map_info->map_height = map_info->input_height - map_info->map_start_index;
 	map_info->map = &map_info->input_[map_info->map_start_index];
 
-	printf("=====map_info=====\n");
-	printf("input_height: %zu\n", map_info->input_height);
-	printf("map_start_index: %zu\n", map_info->map_start_index);
-	printf("map_height: %zu\n", map_info->map_height);
-	int i = 0;
-	while (map_info->map[i])
-	{
-		printf("%s\n", map_info->map[i]);
-		i++;
-	}
-	printf("==================\n");
+	//printf("=====map_info=====\n");
+	//printf("input_height: %zu\n", map_info->input_height);
+	//printf("map_start_index: %zu\n", map_info->map_start_index);
+	//printf("map_height: %zu\n", map_info->map_height);
+	//int i = 0;
+	//while (map_info->map[i])
+	//{
+	//	printf("%s\n", map_info->map[i]);
+	//	i++;
+	//}
+	//printf("==================\n");
 	return ;
 }

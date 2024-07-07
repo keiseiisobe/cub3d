@@ -21,6 +21,8 @@
 
 # define ESC 53
 
+# define MAX_MAP_SIZE 500
+
 # define X 1
 # define Y 2
 
