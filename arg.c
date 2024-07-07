@@ -257,6 +257,11 @@ void	is_arg_valid(int argc, char *argv[])
 		printf("cub3d: Notice: ./cub3d [filename]\n");
 		exit(EXIT_SUCCESS);
 	}
+	if (ft_strlen(argv[1]) < 5 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
+	{
+		printf("cub3d: Error: Invalid file\n");
+		exit(EXIT_SUCCESS);
+	}
 	input_height = get_input_height(argv[1]);
 	input_ = get_input(argv[1], input_height);
 	if (!is_valid_cub_file(input_, input_height))
