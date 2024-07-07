@@ -64,12 +64,6 @@ bool	is_valid_non_map_info(char **input_, int *map_start_index)
 	}
 	while (input_[i][0] == '\n')
 		i++;
-	//printf("input_[i]: %s\n", input_[i]);
-	//if (input_[i][0] != '1' && input_[i][0] != ' ')
-	//{
-	//	printf("cub3d: Error: Invalid non_map info\n");
-	//	return (false);
-	//}
 	*map_start_index = i;
 	return (true);
 }
@@ -97,76 +91,79 @@ size_t	get_map_width(char **map)
 	return (max_width);
 }
 
-char	**add_space_padding(char **map, size_t map_height, size_t map_width)
+char	**add_padding(char **map, size_t map_height, size_t map_width)
 {
-	char	**map_space_padding_;
+	char	**map_padding_;
 	size_t	i;
 	size_t	j;
 
-	map_space_padding_ = xmalloc(sizeof(char *) * (map_height + 3));
+	map_padding_ = xmalloc(sizeof(char *) * (map_height + 3));
 	i = -1;
 	while (++i < map_height + 2)
 	{
-		map_space_padding_[i] = xmalloc(sizeof(char) * (map_width + 3));
+		map_padding_[i] = xmalloc(sizeof(char) * (map_width + 3));
 		j = 0;
-		map_space_padding_[i][j] = PADDING_CHAR;
+		map_padding_[i][j] = PADDING_CHAR;
 		if (i == 0 || i == map_height + 1)
 		{
 			while (++j < map_width + 1)
-				map_space_padding_[i][j] = PADDING_CHAR;
-			map_space_padding_[i][j] = '\0';
+				map_padding_[i][j] = PADDING_CHAR;
+			map_padding_[i][j] = '\0';
 			continue ;
 		}
 		while (++j < map_width + 1)
 		{
 			if (map[i][j-1] == '\0')
 			{
-				map_space_padding_[i][j] = PADDING_CHAR;
+				map_padding_[i][j] = PADDING_CHAR;
 				break ;
 			}
 			if (map[i][j-1] != ' ' && map[i][j-1] != '\n')
-				map_space_padding_[i][j] = map[i][j-1];
+				map_padding_[i][j] = map[i][j-1];
 			else
-				map_space_padding_[i][j] = PADDING_CHAR;
+				map_padding_[i][j] = PADDING_CHAR;
 		}
 		while (++j < map_width + 1)
-			map_space_padding_[i][j] = PADDING_CHAR;
-		map_space_padding_[i][j] = '\0';
+			map_padding_[i][j] = PADDING_CHAR;
+		map_padding_[i][j] = '\0';
 	}
-	map_space_padding_[i] = NULL;
-	//printf("map_space_padding_ ==================\n");
-	//i = 0;
-	//while (map_space_padding_[i])
-	//{
-	//	printf("map[%zu]: %s$\n", i%10, map_space_padding_[i]);
-	//	i++;
-	//}
-	//printf("map_space_padding_ ==================\n");
-	return (map_space_padding_);
+	map_padding_[i] = NULL;
+	if (DEBUG)
+	{
+		printf("map_padding_ ==================\n");
+		i = 0;
+		while (map_padding_[i])
+		{
+			printf("map[%zu]: %s$\n", i%10, map_padding_[i]);
+			i++;
+		}
+		printf("map_padding_ ==================\n");
+	}
+	return (map_padding_);
 }
 
 //mapが囲まれているかどうかの確認
 //'.'の四方隣が'1' or '.'であるかどうか
-bool	is_map_surrounded(char **map_space_padding_, size_t map_height, size_t map_width)
+bool	is_map_surrounded(char **map_padding_, size_t map_height, size_t map_width)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	while (map_space_padding_[i])
+	while (map_padding_[i])
 	{
 		j = 0;
-		while (map_space_padding_[i][j])
+		while (map_padding_[i][j])
 		{
-			if (map_space_padding_[i][j] == PADDING_CHAR)
+			if (map_padding_[i][j] == PADDING_CHAR)
 			{
-				if (i > 1 && map_space_padding_[i-1][j] != '1' && map_space_padding_[i-1][j] != PADDING_CHAR)
+				if (i > 1 && map_padding_[i-1][j] != '1' && map_padding_[i-1][j] != PADDING_CHAR)
 					return (false);
-				if (i < map_height && map_space_padding_[i+1][j] != '1' && map_space_padding_[i+1][j] != PADDING_CHAR)
+				if (i < map_height && map_padding_[i+1][j] != '1' && map_padding_[i+1][j] != PADDING_CHAR)
 					return (false);
-				if (j > 1 && map_space_padding_[i][j-1] != '1' && map_space_padding_[i][j-1] != PADDING_CHAR)
+				if (j > 1 && map_padding_[i][j-1] != '1' && map_padding_[i][j-1] != PADDING_CHAR)
 					return (false);
-				if (j < map_width && map_space_padding_[i][j+1] != '1' && map_space_padding_[i][j+1] != PADDING_CHAR)
+				if (j < map_width && map_padding_[i][j+1] != '1' && map_padding_[i][j+1] != PADDING_CHAR)
 					return (false);
 			}
 			j++;
@@ -177,10 +174,37 @@ bool	is_map_surrounded(char **map_space_padding_, size_t map_height, size_t map_
 	return (true);
 }
 
+//プレイヤーの人数と、mapの文字が正しいかどうかの確認
+bool	char_check(char **map_padding_)
+{
+	size_t	i;
+	size_t	j;
+	size_t	player_count;
+
+	i = 0;
+	player_count = 0;
+	while (map_padding_[i])
+	{
+		j = 0;
+		while (map_padding_[i][j])
+		{
+			if (map_padding_[i][j] == 'N' || map_padding_[i][j] == 'S' || map_padding_[i][j] == 'W' || map_padding_[i][j] == 'E')
+				player_count++;
+			else if (map_padding_[i][j] != '1' && map_padding_[i][j] != '0' && map_padding_[i][j] != PADDING_CHAR)
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	if (player_count != 1)
+		return (false);
+	return (true);
+}
+
 //mapの valid check
 bool	is_valid_map(char **map, size_t map_height)
 {
-	char	**map_space_padding_;
+	char	**map_padding_;
 	size_t	map_width;
 
 	map_width = get_map_width(map);
@@ -190,21 +214,21 @@ bool	is_valid_map(char **map, size_t map_height)
 		printf("cub3d: Error: Invalid map\n");
 		return (false);
 	}
-	map_space_padding_ = add_space_padding(map, map_height, map_width);
-	int i = 0;
-	while (map_space_padding_[i])
+	map_padding_ = add_padding(map, map_height, map_width);
+	if (!is_map_surrounded(map_padding_, map_height, map_width))
 	{
-		printf("map_space_padding_[%d]: %s\n", i%10, map_space_padding_[i]);
-		i++;
-	}
-	if (!is_map_surrounded(map_space_padding_, map_height, map_width))
-	{
-		free_2d_char(map_space_padding_);
+		free_2d_char(map_padding_);
 		printf("map is not surrounded\n");
 		printf("cub3d: Error: Invalid map\n");
 		return (false);
 	}
-	free_2d_char(map_space_padding_);
+	if (!char_check(map_padding_))
+	{
+		free_2d_char(map_padding_);
+		printf("cub3d: Error: Invalid map\n");
+		return (false);
+	}
+	free_2d_char(map_padding_);
 	return (true);
 }
 

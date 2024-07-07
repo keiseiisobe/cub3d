@@ -5,6 +5,7 @@ int	main(int argc, char *argv[])
 	t_cub3d	info;
 
 // arg.c
+	printf("\n\n");
 	is_arg_valid(argc, argv);
 // get_map.c
 	get_map_info(&info.map_info, argv[1]);
