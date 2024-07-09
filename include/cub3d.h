@@ -15,13 +15,19 @@
 
 # include "xmalloc.h"
 # include "get_next_line.h"
+# include "libft.h"
 
 # define WALL_SIZE_WEIGHT 200
 
 # define ESC 53
 
+# define MAX_MAP_SIZE 500
+
 # define X 1
 # define Y 2
+
+# define DEBUG 1
+//# define DEBUG 0
 
 typedef struct	s_data
 {
@@ -43,16 +49,21 @@ typedef struct	s_mlx_info
 
 typedef struct	s_map_info
 {
-	char	**input;
+	char	**input_;
+	size_t	input_height;
+
 	char	**map;
+	size_t	map_start_index;
 	size_t	map_height;
 	size_t	map_width;
-	// North texture
-	// South texture
-	// West texture
-	// East texture
-	// ceiling color
-	// floor color
+
+
+	char	*no_texture_; // North
+	char	*so_texture_; // South
+	char	*we_texture_; // West
+	char	*ea_texture_; // East
+	int		ceiling_color[3]; // Ceiling
+	int		floor_color[3]; // Floor
 }	t_map_info;
 
 enum wall_side
@@ -99,6 +110,8 @@ void	is_arg_valid(int argc, char *argv[]);
 
 // get_map.c
 void	get_map_info(t_map_info *map_info, char *filename);
+size_t	get_input_height(char *filename);
+char	**get_input(char *filename, size_t height);
 
 // get_player.c
 void	get_player_initial_info(t_player_info *player_info, t_map_info *map_info);
@@ -117,6 +130,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 // event.c
 int		event_handler(int keycode, t_cub3d *info);
+int		X_bottun_handler(t_cub3d *info);
 
 // move.c
 void	walk_forward(t_player_info *player_info, char **map);

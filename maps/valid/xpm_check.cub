@@ -1,0 +1,12 @@
+NO ./texture/direction/std_wall_n.xpm
+SO ./texture/direction/xpm_check_2_4.xpm
+WE ./texture/direction/xpm_check_4_4.xpm
+EA ./texture/direction/std_wall_e.xpm
+C 60,30,40
+F 220,100,0
+11111111111
+10000001111
+10001001001
+11000000001
+1000N000001
+11111111111

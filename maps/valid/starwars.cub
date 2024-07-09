@@ -1,0 +1,12 @@
+NO ./texture/deathstar1.xpm
+SO ./texture/skybox/deathstar2.xpm
+WE ./texture/skybox/space2.xpm
+EA ./texture/space.xpm
+C 0,0,0
+F 0,00,0
+11111111111
+10000001001
+10001001001
+11000000001
+1000N000001
+11111111111

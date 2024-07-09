@@ -19,6 +19,7 @@ int	event_handler(int keycode, t_cub3d *info)
 	if (keycode == ESC)
 	{
 		printf("exit\n");
+		mlx_destroy_window(info->mlx_info.mlx, info->mlx_info.mlx_win);
 		exit(EXIT_SUCCESS);
 	}
 	if (keycode == 13) // forward (W)
@@ -39,5 +40,13 @@ int	event_handler(int keycode, t_cub3d *info)
 		render_next_image(&info->mlx_info, info);
 		mlx_destroy_image(info->mlx_info.mlx, tmp_img_data->img);
 	}
+	return (0);
+}
+
+int	X_bottun_handler(t_cub3d *info)
+{
+	printf("exit\n");
+	mlx_destroy_window(info->mlx_info.mlx, info->mlx_info.mlx_win);
+	exit(EXIT_SUCCESS);
 	return (0);
 }

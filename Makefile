@@ -1,10 +1,18 @@
 NAME = cub3d
-SRCS = cub3d.c get_map.c get_player.c init_mlx.c game.c draw.c error.c\
-		event.c move.c arg.c xmalloc.c mlx_utils.c\
-		get_next_line.c get_next_line_utils.c\
-		ft_err_printf.c\
-		err_if_something1.c err_if_something2.c\
-		ft_err_put_something1.c ft_err_put_something2.c
+SRCS = main.c \
+		get_map.c \
+		get_player.c \
+		event.c \
+		move.c \
+		init_mlx.c \
+		game.c \
+		draw.c \
+		error.c \
+		arg.c \
+		xmalloc.c \
+		mlx_utils.c \
+		libft/get_next_line.c \
+		libft/get_next_line_utils.c
 OBJS_DIR = object
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 CC = cc
