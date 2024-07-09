@@ -23,8 +23,12 @@
 
 # define MAX_MAP_SIZE 500
 
-# define X 1
-# define Y 2
+# define ONE_STEP 0.05
+
+# define FORWARD 1
+# define BACKWARD 2
+# define LEFT 3
+# define RIGHT 4
 
 # define DEBUG 1
 //# define DEBUG 0
