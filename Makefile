@@ -6,7 +6,7 @@
 #    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
-#    Updated: 2024/07/07 15:33:34 by miyazawa.ka      ###   ########.fr        #
+#    Updated: 2024/07/09 15:48:12 by miyazawa.ka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		= cub3d
 #CC			= clang
 CC			= cc
 CFLAGS		= -O3 -Wall -Wextra -Werror
-CFLAGS		+= -g
+#CFLAGS		+= -g
 #CFLAGS		+= -fsanitize=address
 
 MLXFLAG		= -framework OpenGL -framework AppKit

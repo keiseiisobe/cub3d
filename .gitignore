@@ -1,4 +1,5 @@
 .vscode
 *.o
 libmlx.dylib
+*.DS_Store
 libft.a

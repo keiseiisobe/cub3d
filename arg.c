@@ -113,12 +113,12 @@ char	**add_padding(char **map, size_t map_height, size_t map_width)
 		}
 		while (++j < map_width + 1)
 		{
-			if (map[i][j-1] == '\0')
+			if (map[i][j-1] == '\n' || map[i][j-1] == '\0')
 			{
 				map_padding_[i][j] = PADDING_CHAR;
 				break ;
 			}
-			if (map[i][j-1] != ' ' && map[i][j-1] != '\n')
+			if (map[i][j-1] != ' ')
 				map_padding_[i][j] = map[i][j-1];
 			else
 				map_padding_[i][j] = PADDING_CHAR;
