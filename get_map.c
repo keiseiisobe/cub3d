@@ -43,7 +43,7 @@ char	**get_input(char *filename, size_t height)
 	return (input);
 }
 
-void	get_surface_textures(t_map_info *map_info)
+void	get_non_map_info(t_map_info *map_info)
 {
 	size_t	i;
 	size_t	k;
@@ -128,7 +128,7 @@ void	get_map_info(t_map_info *map_info, char *filename)
 	map_info->input_height = get_input_height(filename);
 	map_info->input_ = get_input(filename, map_info->input_height);
 
-	get_surface_textures(map_info);
+	get_non_map_info(map_info);
 	map_info->map_height = map_info->input_height - map_info->map_start_index;
 	map_info->map = &map_info->input_[map_info->map_start_index];
 
