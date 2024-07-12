@@ -1,5 +1,6 @@
 .vscode
 *.o
 libmlx.dylib
+*.DS_Store
 libft.a
 minilibx_mms_20200219

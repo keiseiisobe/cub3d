@@ -12,10 +12,89 @@ void	free_2d_char(char **str)
 	free(str);
 }
 
-//map以外の情報が正しいフォーマットかどうかの確認
-//6情報全てのsuffix?があるかどうかは確認できると思う。多分
-//split後の二次元配列の情報が、１行２要素に収まってるかどうかは未チェック
-//split後のsplited_list[i][1]がtexture, RGBなのかどうか、ファイルが開けるかは未チェック
+int	count_char_occurrences(const char *str, char target)
+{
+	int	count;
+
+	count = 0;
+	while (*str != '\0')
+	{
+		if (*str == target)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+bool	is_digit_str(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (false);
+		str++;
+	}
+	return (true);
+}
+
+
+bool	is_valid_rgb_format(char *rgb_str)
+{
+	char	**splited_rgb;
+
+	if (count_char_occurrences(rgb_str, ',') != 2 || ft_strlen(rgb_str) < 5 || ft_strlen(rgb_str) > 11)
+	{
+		printf("cub3d: Error: Invalid RGB format\n");
+		return (false);
+	}
+	rgb_str[ft_strlen(rgb_str) - 1] = '\0';
+	splited_rgb = ft_split(rgb_str, ',');
+	if (splited_rgb[0] == NULL || splited_rgb[1] == NULL || splited_rgb[2] == NULL || splited_rgb[3] != NULL)
+	{
+		printf("cub3d: Error: Invalid RGB format\n");
+		free_2d_char(splited_rgb);
+		return (false);
+	}
+	if (!is_digit_str(splited_rgb[0]) || !is_digit_str(splited_rgb[1]) || !is_digit_str(splited_rgb[2]))
+	{
+		printf("cub3d: Error: Invalid RGB format\n");
+		free_2d_char(splited_rgb);
+		return (false);
+	}
+	if (ft_atoi(splited_rgb[0]) < 0 || ft_atoi(splited_rgb[0]) > 255 || ft_atoi(splited_rgb[1]) < 0 || ft_atoi(splited_rgb[1]) > 255 || ft_atoi(splited_rgb[2]) < 0 || ft_atoi(splited_rgb[2]) > 255)
+	{
+		printf("cub3d: Error: Invalid RGB format\n");
+		free_2d_char(splited_rgb);
+		return (false);
+	}
+	free_2d_char(splited_rgb);
+	return (true);
+}
+
+
+bool	is_usable_fale(char *file_path)
+{
+	int	fd;
+
+	file_path[ft_strlen(file_path) - 1] = '\0';
+	if (ft_strlen(file_path) < 5 || ft_strncmp(file_path + ft_strlen(file_path) - 4, ".xpm", 4))
+	{
+		printf("file_path: %s\n", file_path);
+		printf("cub3d: Error: Invalid file path\n");
+		return (false);
+	}
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("permission denied\n");
+		printf("file_path: %s\n", file_path);
+		printf("cub3d: Error: Invalid file path\n");
+		return (false);
+	}
+	close(fd);
+	return (true);
+}
+
 bool	is_valid_non_map_info(char **input_, int *map_start_index)
 {
 	size_t	i;
@@ -36,17 +115,17 @@ bool	is_valid_non_map_info(char **input_, int *map_start_index)
 			free_2d_char(splited_line);
 			return (false);
 		}
-		if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'N' && splited_line[0][1] == 'O' && !(info_flags & 0b100000))
+		if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'N' && splited_line[0][1] == 'O' && !(info_flags & 0b100000) && is_usable_fale(splited_line[1]))
 			info_flags |= 0b100000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'S' && splited_line[0][1] == 'O' && !(info_flags & 0b010000))
+		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'S' && splited_line[0][1] == 'O' && !(info_flags & 0b010000) && is_usable_fale(splited_line[1]))
 			info_flags |= 0b010000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'W' && splited_line[0][1] == 'E' && !(info_flags & 0b001000))
+		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'W' && splited_line[0][1] == 'E' && !(info_flags & 0b001000) && is_usable_fale(splited_line[1]))
 			info_flags |= 0b001000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'E' && splited_line[0][1] == 'A' && !(info_flags & 0b000100))
+		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'E' && splited_line[0][1] == 'A' && !(info_flags & 0b000100) && is_usable_fale(splited_line[1]))
 			info_flags |= 0b000100;
-		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'F' && !(info_flags & 0b000010))
+		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'F' && !(info_flags & 0b000010) && is_valid_rgb_format(splited_line[1]))
 			info_flags |= 0b000010;
-		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'C' && !(info_flags & 0b000001))
+		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'C' && !(info_flags & 0b000001) && is_valid_rgb_format(splited_line[1]))
 			info_flags |= 0b000001;
 		else
 		{
@@ -113,12 +192,12 @@ char	**add_padding(char **map, size_t map_height, size_t map_width)
 		}
 		while (++j < map_width + 1)
 		{
-			if (map[i][j-1] == '\0')
+			if (map[i][j-1] == '\n' || map[i][j-1] == '\0')
 			{
 				map_padding_[i][j] = PADDING_CHAR;
 				break ;
 			}
-			if (map[i][j-1] != ' ' && map[i][j-1] != '\n')
+			if (map[i][j-1] != ' ')
 				map_padding_[i][j] = map[i][j-1];
 			else
 				map_padding_[i][j] = PADDING_CHAR;

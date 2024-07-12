@@ -1,5 +1,11 @@
 #include "cub3d.h"
 
+
+//__attribute__((destructor))
+//static void destructor() {
+//    system("leaks -q cub3d");
+//}
+
 int	main(int argc, char *argv[])
 {
 	t_cub3d	info;
@@ -19,10 +25,4 @@ int	main(int argc, char *argv[])
 	mlx_hook(info.mlx_info.mlx_win, 2, 0, event_handler, &info);
 	mlx_hook(info.mlx_info.mlx_win, 17, 0, X_bottun_handler, &info);
 	mlx_loop(info.mlx_info.mlx);
-}
-
-
-__attribute__((destructor))
-static void destructor() {
-    system("leaks -q cub3d");
 }
