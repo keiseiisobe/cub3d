@@ -61,11 +61,34 @@ typedef struct	s_map_info
 	size_t	map_height;
 	size_t	map_width;
 
+	char	*north_texture_filename_;
+	char	*south_texture_filename_;
+	char	*west_texture_filename_;
+	char	*east_texture_filename_;
 
-	char	*no_texture_; // North
-	char	*so_texture_; // South
-	char	*we_texture_; // West
-	char	*ea_texture_; // East
+	bool	north_is_png;
+	bool	south_is_png;
+	bool	west_is_png;
+	bool	east_is_png;
+
+	char	*north_texture_;
+	char	*south_texture_;
+	char	*west_texture_;
+	char	*east_texture_;
+
+	size_t	north_texture_width;
+	size_t	north_texture_height;
+	size_t	south_texture_width;
+	size_t	south_texture_height;
+	size_t	west_texture_width;
+	size_t	west_texture_height;
+	size_t	east_texture_width;
+	size_t	east_texture_height;
+
+	// temp
+	size_t	tex_width;
+	size_t	tex_height;
+
 	int		ceiling_color[3]; // Ceiling
 	int		floor_color[3]; // Floor
 }	t_map_info;
