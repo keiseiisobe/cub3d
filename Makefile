@@ -37,6 +37,7 @@ SRCS = main.c \
 		event.c \
 		move.c \
 		init_mlx.c \
+		init_texture.c \
 		game.c \
 		draw.c \
 		error.c \

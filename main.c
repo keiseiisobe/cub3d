@@ -13,6 +13,7 @@ int	main(int argc, char *argv[])
 	get_player_initial_info(&info.player_info, &info.map_info);
 // init.c
 	initialize_mlx(&info.mlx_info);
+	initialize_texture(&info);
 // draw.c
 	game(&info);
 // hook and loop
