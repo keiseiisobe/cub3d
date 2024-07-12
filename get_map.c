@@ -43,6 +43,33 @@ char	**get_input(char *filename, size_t height)
 	return (input);
 }
 
+bool	is_png(char *fn)
+{
+	return (ft_strncmp(fn + ft_strlen(fn) - 4, ".png", 4) == 0);
+}
+
+void	set_walls_info(char *fn, t_map_info *map_info, char d)
+{
+	fn[ft_strlen(fn) - 1] = '\0';
+	if (d == 'N')
+		map_info->north_texture_filename_ = ft_strdup(fn);
+	else if (d == 'S')
+		map_info->south_texture_filename_ = ft_strdup(fn);
+	else if (d == 'W')
+		map_info->west_texture_filename_ = ft_strdup(fn);
+	else if (d == 'E')
+		map_info->east_texture_filename_ = ft_strdup(fn);
+	if (d == 'N')
+		map_info->north_is_png = is_png(fn);
+	else if (d == 'S')
+		map_info->south_is_png = is_png(fn);
+	else if (d == 'W')
+		map_info->west_is_png = is_png(fn);
+	else if (d == 'E')
+		map_info->east_is_png = is_png(fn);
+	return ;
+}
+
 void	get_non_map_info(t_map_info *map_info)
 {
 	size_t	i;
@@ -60,13 +87,13 @@ void	get_non_map_info(t_map_info *map_info)
 			continue ;
 		splited_line = ft_split(map_info->input_[i], ' ');
 		if (splited_line[0][0] == 'N')
-			map_info->north_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], map_info, 'N');
 		else if (splited_line[0][0] == 'S')
-			map_info->south_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], map_info, 'S');
 		else if (splited_line[0][0] == 'W')
-			map_info->west_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], map_info, 'W');
 		else if (splited_line[0][0] == 'E')
-			map_info->east_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], map_info, 'E');
 		else if (splited_line[0][0] == 'C')
 		{
 			rgb_splited_line = ft_split(splited_line[1], ',');
@@ -108,10 +135,22 @@ void	get_non_map_info(t_map_info *map_info)
 	if (DEBUG)
 	{
 		printf("===== non_map info =====\n");
-		printf("NO: %s", map_info->north_texture_filename_);
-		printf("SO: %s", map_info->south_texture_filename_);
-		printf("WE: %s", map_info->west_texture_filename_);
-		printf("EA: %s", map_info->east_texture_filename_);
+		if (map_info->north_is_png)
+			printf("NO: PNG %s\n", map_info->north_texture_filename_);
+		else
+			printf("NO: XPM %s\n", map_info->north_texture_filename_);
+		if (map_info->south_is_png)
+			printf("SO: PNG %s\n", map_info->south_texture_filename_);
+		else
+			printf("SO: XPM %s\n", map_info->south_texture_filename_);
+		if (map_info->west_is_png)
+			printf("WE: PNG %s\n", map_info->west_texture_filename_);
+		else
+			printf("WE: XPM %s\n", map_info->west_texture_filename_);
+		if (map_info->east_is_png)
+			printf("EA: PNG %s\n", map_info->east_texture_filename_);
+		else
+			printf("EA: XPM %s\n", map_info->east_texture_filename_);
 		printf("C: %d, %d, %d\n", map_info->ceiling_color[0], map_info->ceiling_color[1], map_info->ceiling_color[2]);
 		printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
 		printf("========================\n");

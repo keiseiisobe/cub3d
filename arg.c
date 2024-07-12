@@ -77,7 +77,7 @@ bool	is_usable_fale(char *file_path)
 	int	fd;
 
 	file_path[ft_strlen(file_path) - 1] = '\0';
-	if (ft_strlen(file_path) < 5 || ft_strncmp(file_path + ft_strlen(file_path) - 4, ".xpm", 4))
+	if (ft_strlen(file_path) < 5 || (ft_strncmp(file_path + ft_strlen(file_path) - 4, ".xpm", 4) && ft_strncmp(file_path + ft_strlen(file_path) - 4, ".png", 4)))
 	{
 		printf("file_path: %s\n", file_path);
 		printf("cub3d: Error: Invalid file path\n");
