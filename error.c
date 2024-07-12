@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/12 18:45:50 by miyazawa.ka       #+#    #+#             */
+/*   Updated: 2024/07/12 18:45:50 by miyazawa.ka      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "error.h"
 
 void	handle_error(bool is_error)
@@ -11,5 +23,17 @@ void	handle_error(bool is_error)
 	{
 		printf("cub3d: Unknown error\n");
 		exit(EXIT_FAILURE);
+	}
+}
+
+void	put_my_error(const char *msg)
+{
+	int	i;
+
+	i = 0;
+	while (msg[i] != '\0')
+	{
+		write(2, &msg[i], 1);
+		i++;
 	}
 }

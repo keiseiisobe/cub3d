@@ -169,5 +169,6 @@ void	turn_right(t_player_info *player_info);
 
 // error.c
 void	handle_error(bool is_error);
+void	put_my_error(const char *msg);
 
 #endif

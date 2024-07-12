@@ -1,7 +1,7 @@
-NO ./texture/north_61.xpm
-SO ./texture/south_61.xpm
-WE ./texture/west_61.xpm
-EA ./texture/east_61.xpm
+NO ./texture/xpm/north_61.xpm
+SO ./texture/xpm/south_61.xpm
+WE ./texture/xpm/west_61.xpm
+EA ./texture/xpm/east_61.xpm
 F 220,100,0
 C 225,30,0
 
