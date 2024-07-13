@@ -132,30 +132,65 @@ int	get_wall_color(int wall_side, t_map_info *map_info)
 		return (0x00FFFF00); // green
 }
 
-void	draw_vertical_line(t_mlx_info *mlx_info, t_player_info *player_info, size_t wall_height, size_t i, int color)
+int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+void	draw_vertical_line(t_mlx_info *mlx_info, t_player_info *player_info, t_map_info *map_info, size_t wall_height, size_t i)
 {
 	double	wall_x;
 	int		tex_x;
-	size_t	begin_x;
-	size_t	begin_y;
+	int		tex_y;
+	double	step;
+	double	tex_pos;
+	int		begin_x;
+	int		begin_y;
 	size_t	current_height;
+	int		tex_color;
 
+	// Side depend on your direciton. Must be fixed.
 	if (player_info->wall_side == NORTH || player_info->wall_side == SOUTH)
-		wall_x = player_info->pos_y + player_info->perpendicular_distance_to_wall * player_info->ray_y;
-	else
 		wall_x = player_info->pos_x + player_info->perpendicular_distance_to_wall * player_info->ray_x;
+	else
+		wall_x = player_info->pos_y + player_info->perpendicular_distance_to_wall * player_info->ray_y;
 	wall_x -= floor(wall_x);
-	tex_x = int(wall_x * double(tex_width));
-	if ((player_info->wall_side == NORTH || player_info->wall_side == SOUTH) && player_info->ray_x < 0)
+
+	tex_x = (int)(wall_x * (double)map_info->tex_width);
+//	printf("wall_x: %f\n", wall_x);
+//	if ((player_info->wall_side == NORTH || player_info->wall_side == SOUTH) && player_info->ray_x > 0)
+//		tex_x = map_info->tex_width - tex_x - 1;
+//	else if ((player_info->wall_side == WEST || player_info->wall_side == EAST) && player_info->ray_y < 0)
+//		tex_x = map_info->tex_width - tex_x - 1;
 	begin_x = i;
 	begin_y = (mlx_info->win_height / 2) - (wall_height / 2);
+	if (begin_y < 0)
+		begin_y = 0;
+
+	step = 1.0 * map_info->tex_height / wall_height;
+//	tex_pos = begin_y;
+	tex_pos = (begin_y - mlx_info->win_height / 2 + wall_height / 2) * step;
+
 	current_height = 0;
+//	tex_y = tex_pos;
 	while (current_height < wall_height)
 	{
-		if (begin_y < 0 || begin_y >= mlx_info->win_height)
-			begin_y++;
-		else
-			my_mlx_pixel_put(&mlx_info->img_data, begin_x, begin_y++, color);
+//		printf("begin_y: %zu\n", begin_y);
+		if (begin_y >= (int)mlx_info->win_height)
+			break ;
+		tex_y = (int)tex_pos;// & (map_info->tex_height - 1);
+//		printf("tex_pos: %f\n", tex_pos);
+//		printf("tex_y: %d\n", tex_y);
+		tex_pos += step;
+		if (player_info->wall_side == NORTH)
+			tex_color = *(unsigned int *)(map_info->north_texture_ + (tex_y * 256) + (tex_x * (32 / 8)));
+		else if (player_info->wall_side == SOUTH)
+			tex_color = *(unsigned int *)(map_info->south_texture_ + (tex_y * 256) + (tex_x * (32 / 8)));
+		else if (player_info->wall_side == WEST)
+			tex_color = *(unsigned int *)(map_info->west_texture_ + (tex_y * 256) + (tex_x * (32 / 8)));
+		else // (player_info->wall_side == EAST)
+			tex_color = *(unsigned int *)(map_info->east_texture_ + (tex_y * 256) + (tex_x * (32 / 8)));
+		my_mlx_pixel_put(&mlx_info->img_data, begin_x, begin_y++, tex_color);
 		current_height++;
 	}
 }
@@ -164,7 +199,6 @@ void	draw_loop(t_mlx_info *mlx_info, t_map_info *map_info, t_player_info *player
 {
 	size_t	i;
 	size_t	wall_height;
-	int		color;
 
 	i = 0;
 	draw_floor(mlx_info);
@@ -174,8 +208,8 @@ void	draw_loop(t_mlx_info *mlx_info, t_map_info *map_info, t_player_info *player
 		ready_to_raycast(mlx_info, player_info, i);
 		raycast_until_hit_wall(player_info, map_info);
 		wall_height = get_wall_height(player_info);
-		color = get_wall_color(player_info->wall_side, map_info);
-		draw_vertical_line(mlx_info, player_info, wall_height, i, color);
+//		color = get_wall_color(player_info->wall_side, map_info);
+		draw_vertical_line(mlx_info, player_info, map_info, wall_height, i);
 		i++;
 	}
 }

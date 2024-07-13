@@ -22,8 +22,9 @@ int	main(int argc, char *argv[])
 	mlx_loop(info.mlx_info.mlx);
 }
 
-
+/*
 __attribute__((destructor))
 static void destructor() {
     system("leaks -q cub3d");
 }
+*/
