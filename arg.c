@@ -269,5 +269,6 @@ void	is_arg_valid(int argc, char *argv[])
 		free_2d_char(input_);
 		exit(EXIT_SUCCESS);
 	}
+	free_2d_char(input_);
 	return ;
 }

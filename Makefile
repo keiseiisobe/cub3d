@@ -44,8 +44,6 @@ SRCS = main.c \
 		arg.c \
 		xmalloc.c \
 		mlx_utils.c \
-		gnl/get_next_line.c \
-		gnl/get_next_line_utils.c
 
 OBJS 	= $(SRCS:%.c=%.o)
 

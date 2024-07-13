@@ -63,28 +63,24 @@ typedef struct	s_texture_info
 	void	*mlx;
 	// north texture info
 	char	*north_texture_filename_;
-//	char	*north_texture_;
 	int		north_tex_width;
 	int		north_tex_height;
 	t_data	north_img;
 
 	// south texture info
 	char	*south_texture_filename_;
-//	char	*south_texture_;
 	int		south_tex_width;
 	int		south_tex_height;
 	t_data	south_img;
 
 	// west texture info
 	char	*west_texture_filename_;
-//	char	*west_texture_;
 	int		west_tex_width;
 	int		west_tex_height;
 	t_data	west_img;
 
 	// east texture info
 	char	*east_texture_filename_;
-//	char	*east_texture_;
 	int		east_tex_width;
 	int		east_tex_height;
 	t_data	east_img;
@@ -156,6 +152,7 @@ typedef struct	s_draw_info
 
 // arg.c
 void	is_arg_valid(int argc, char *argv[]);
+void	free_2d_char(char **str);
 
 // get_map.c
 void	get_map_info(t_map_info *map_info, char *filename);
@@ -175,14 +172,14 @@ void	initialize_texture(t_cub3d *info);
 void	game(t_cub3d *info);
 
 // draw.c
-void	draw_loop(t_mlx_info *mlx_info, t_map_info *map_info, t_player_info *player_info);
+void	draw_loop(t_cub3d *info);
 
 // mlx_utils.c
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 // event.c
 int		event_handler(int keycode, t_cub3d *info);
-int		X_bottun_handler(t_cub3d *info);
+int		x_bottun_handler(t_cub3d *info);
 
 // move.c
 void	walk_forward(t_player_info *player_info, char **map);
