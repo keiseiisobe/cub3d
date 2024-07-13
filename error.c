@@ -1,4 +1,4 @@
-#include "error.h"
+#include "include/cub3d.h"
 
 void	handle_error(bool is_error)
 {

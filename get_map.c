@@ -60,13 +60,13 @@ void	get_surface_textures(t_map_info *map_info)
 			continue ;
 		splited_line = ft_split(map_info->input_[i], ' ');
 		if (splited_line[0][0] == 'N')
-			map_info->north_texture_filename_ = ft_strdup(splited_line[1]);
+			map_info->texture_info.north_texture_filename_ = ft_strdup(splited_line[1]);
 		else if (splited_line[0][0] == 'S')
-			map_info->south_texture_filename_ = ft_strdup(splited_line[1]);
+			map_info->texture_info.south_texture_filename_ = ft_strdup(splited_line[1]);
 		else if (splited_line[0][0] == 'W')
-			map_info->west_texture_filename_ = ft_strdup(splited_line[1]);
+			map_info->texture_info.west_texture_filename_ = ft_strdup(splited_line[1]);
 		else if (splited_line[0][0] == 'E')
-			map_info->east_texture_filename_ = ft_strdup(splited_line[1]);
+			map_info->texture_info.east_texture_filename_ = ft_strdup(splited_line[1]);
 		else if (splited_line[0][0] == 'C')
 		{
 			rgb_splited_line = ft_split(splited_line[1], ',');
@@ -108,10 +108,10 @@ void	get_surface_textures(t_map_info *map_info)
 	if (DEBUG)
 	{
 		printf("===== non_map info =====\n");
-		printf("NO: %s", map_info->north_texture_filename_);
-		printf("SO: %s", map_info->south_texture_filename_);
-		printf("WE: %s", map_info->west_texture_filename_);
-		printf("EA: %s", map_info->east_texture_filename_);
+		printf("NO: %s", map_info->texture_info.north_texture_filename_);
+		printf("SO: %s", map_info->texture_info.south_texture_filename_);
+		printf("WE: %s", map_info->texture_info.west_texture_filename_);
+		printf("EA: %s", map_info->texture_info.east_texture_filename_);
 		printf("C: %d, %d, %d\n", map_info->ceiling_color[0], map_info->ceiling_color[1], map_info->ceiling_color[2]);
 		printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
 		printf("========================\n");

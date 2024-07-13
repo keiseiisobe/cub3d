@@ -2,57 +2,27 @@
 
 void	initialize_texture(t_cub3d *info)
 {
-	void	*mlx;
-	t_data	north_img;
-	t_data	south_img;
-	t_data	west_img;
-	t_data	east_img;
-	int		width;
-	int		height;
+	t_texture_info	*tmp;
 
-	mlx = mlx_init();
+	tmp = &info->map_info.texture_info;
 	// North
-	north_img.img = mlx_png_file_to_image(mlx, "./texture/png/redbrick.png", &width, &height);
-	if (!north_img.img)
+	tmp->north_img.img = mlx_png_file_to_image(info->mlx_info.mlx, "./texture/png/redbrick.png", &tmp->north_tex_width, &tmp->north_tex_height);
+	if (!tmp->north_img.img)
 		exit(EXIT_FAILURE);
-	north_img.addr = mlx_get_data_addr(north_img.img, &north_img.bits_per_pixel, &north_img.line_length, &north_img.endian);
-	info->map_info.north_texture_ = north_img.addr;
-
-	printf("width: %d\n", width);
-	printf("height: %d\n", height);
-	printf("bpp: %d\n", north_img.bits_per_pixel);
-	printf("line_length: %d\n", north_img.line_length);
-/*
-	int	dst;
-	int	y = 0;
-	while (y < 4)
-	{
-		int	x = 0;
-		while (x < 64)
-		{
-			dst = *(unsigned int *)(info->map_info.north_texture_ + (y * north_img.line_length) + (x++ * 4));
-			printf("%x ", dst);
-		}
-		printf("\n");
-		y++;
-	}
-*/
+	tmp->north_img.addr = mlx_get_data_addr(tmp->north_img.img, &tmp->north_img.bits_per_pixel, &tmp->north_img.line_length, &tmp->north_img.endian);
 	// South
-	south_img.img = mlx_png_file_to_image(mlx, "texture/png/bluestone.png", &width, &height);
-	south_img.addr = mlx_get_data_addr(south_img.img, &south_img.bits_per_pixel, &south_img.line_length, &south_img.endian);
-	info->map_info.south_texture_ = south_img.addr;
-//	mlx_destroy_image(mlx, img.img);
+	tmp->south_img.img = mlx_png_file_to_image(info->mlx_info.mlx, "texture/png/bluestone.png", &tmp->south_tex_width, &tmp->south_tex_height);
+	if (!tmp->south_img.img)
+		exit(EXIT_FAILURE);
+	tmp->south_img.addr = mlx_get_data_addr(tmp->south_img.img, &tmp->south_img.bits_per_pixel, &tmp->south_img.line_length, &tmp->south_img.endian);
 	// West
-	west_img.img = mlx_png_file_to_image(mlx, "texture/png/colorstone.png", &width, &height);
-	west_img.addr = mlx_get_data_addr(west_img.img, &west_img.bits_per_pixel, &west_img.line_length, &west_img.endian);
-	info->map_info.west_texture_ = west_img.addr;
-//	mlx_destroy_image(mlx, img.img);
+	tmp->west_img.img = mlx_png_file_to_image(info->mlx_info.mlx, "texture/png/colorstone.png", &tmp->west_tex_width, &tmp->west_tex_height);
+	if (!tmp->west_img.img)
+		exit(EXIT_FAILURE);
+	tmp->west_img.addr = mlx_get_data_addr(tmp->west_img.img, &tmp->west_img.bits_per_pixel, &tmp->west_img.line_length, &tmp->west_img.endian);
 	// East
-	east_img.img = mlx_png_file_to_image(mlx, "texture/png/purplestone.png", &width, &height);
-	east_img.addr = mlx_get_data_addr(east_img.img, &east_img.bits_per_pixel, &east_img.line_length, &east_img.endian);
-	info->map_info.east_texture_ = east_img.addr;
-	// tex_width and tex_height
-	info->map_info.tex_width = width;
-	info->map_info.tex_height = height;
-//	mlx_destroy_image(mlx, img.img);
+	tmp->east_img.img = mlx_png_file_to_image(info->mlx_info.mlx, "texture/png/purplestone.png", &tmp->east_tex_width, &tmp->east_tex_height);
+	if (!tmp->east_img.img)
+		exit(EXIT_FAILURE);
+	tmp->east_img.addr = mlx_get_data_addr(tmp->east_img.img, &tmp->east_img.bits_per_pixel, &tmp->east_img.line_length, &tmp->east_img.endian);
 }
