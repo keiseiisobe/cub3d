@@ -152,8 +152,8 @@ void	get_non_map_info(t_map_info *map_info)
 			printf("EA: PNG %s\n", map_info->texture_info.east_texture_filename_);
 		else
 			printf("EA: XPM %s\n", map_info->texture_info.east_texture_filename_);
-		printf("C: %d, %d, %d\n", map_info->ceiling_color[1], map_info->ceiling_color[2], map_info->ceiling_color[3]);
-		printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
+		printf("C: %d, %d, %d\n", map_info->ceiling_color[2], map_info->ceiling_color[1], map_info->ceiling_color[0]);
+		printf("F: %d, %d, %d\n", map_info->floor_color[2], map_info->floor_color[1], map_info->floor_color[0]);
 		printf("========================\n");
 	}
 	return ;
