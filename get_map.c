@@ -88,11 +88,11 @@ void	get_non_map_info(t_map_info *map_info)
 		if (splited_line[0][0] == 'N')
 			set_walls_info(splited_line[1], &map_info->texture_info, 'N');
 		else if (splited_line[0][0] == 'S')
-			map_info->texture_info.south_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], &map_info->texture_info, 'S');
 		else if (splited_line[0][0] == 'W')
-			map_info->texture_info.west_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], &map_info->texture_info, 'W');
 		else if (splited_line[0][0] == 'E')
-			map_info->texture_info.east_texture_filename_ = ft_strdup(splited_line[1]);
+			set_walls_info(splited_line[1], &map_info->texture_info, 'E');
 		else if (splited_line[0][0] == 'C')
 		{
 			rgb_splited_line = ft_split(splited_line[1], ',');
