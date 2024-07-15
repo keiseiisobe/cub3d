@@ -65,24 +65,28 @@ typedef struct	s_texture_info
 	char	*north_texture_filename_;
 	int		north_tex_width;
 	int		north_tex_height;
+	bool	north_is_png;
 	t_data	north_img;
 
 	// south texture info
 	char	*south_texture_filename_;
 	int		south_tex_width;
 	int		south_tex_height;
+	bool	south_is_png;
 	t_data	south_img;
 
 	// west texture info
 	char	*west_texture_filename_;
 	int		west_tex_width;
 	int		west_tex_height;
+	bool	west_is_png;
 	t_data	west_img;
 
 	// east texture info
 	char	*east_texture_filename_;
 	int		east_tex_width;
 	int		east_tex_height;
+	bool	east_is_png;
 	t_data	east_img;
 }	t_texture_info;
 
