@@ -194,5 +194,6 @@ void	*xmalloc(size_t size);
 
 // error.c
 void	handle_error(bool is_error);
+void	put_my_error(const char *msg);
 
 #endif

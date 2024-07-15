@@ -13,3 +13,15 @@ void	handle_error(bool is_error)
 		exit(EXIT_FAILURE);
 	}
 }
+
+void	put_my_error(const char *msg)
+{
+	int	i;
+
+	i = 0;
+	while (msg[i] != '\0')
+	{
+		write(2, &msg[i], 1);
+		i++;
+	}
+}

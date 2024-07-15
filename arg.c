@@ -12,45 +12,145 @@ void	free_2d_char(char **str)
 	free(str);
 }
 
-//map以外の情報が正しいフォーマットかどうかの確認
-//6情報全てのsuffix?があるかどうかは確認できると思う。多分
-//split後の二次元配列の情報が、１行２要素に収まってるかどうかは未チェック
-//split後のsplited_list[i][1]がtexture, RGBなのかどうか、ファイルが開けるかは未チェック
+int	count_char_occurrences(const char *str, char target)
+{
+	int	count;
+
+	count = 0;
+	while (*str != '\0')
+	{
+		if (*str == target)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+bool	is_digit_str(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (false);
+		str++;
+	}
+	return (true);
+}
+
+
+bool	is_valid_rgb_format(char *rgb_str)
+{
+	char	**splited_rgb;
+
+	if (count_char_occurrences(rgb_str, ',') != 2 || ft_strlen(rgb_str) < 5 || ft_strlen(rgb_str) > 11)
+	{
+		put_my_error("cub3d: Error: Invalid RGB format\n");
+		return (false);
+	}
+	rgb_str[ft_strlen(rgb_str) - 1] = '\0';
+	splited_rgb = ft_split(rgb_str, ',');
+	if (splited_rgb[0] == NULL || splited_rgb[1] == NULL || splited_rgb[2] == NULL || splited_rgb[3] != NULL)
+	{
+		put_my_error("cub3d: Error: Invalid RGB format\n");
+		free_2d_char(splited_rgb);
+		return (false);
+	}
+	if (!is_digit_str(splited_rgb[0]) || !is_digit_str(splited_rgb[1]) || !is_digit_str(splited_rgb[2]))
+	{
+		put_my_error("cub3d: Error: Invalid RGB format\n");
+		free_2d_char(splited_rgb);
+		return (false);
+	}
+	if (ft_atoi(splited_rgb[0]) < 0 || ft_atoi(splited_rgb[0]) > 255 || ft_atoi(splited_rgb[1]) < 0 || ft_atoi(splited_rgb[1]) > 255 || ft_atoi(splited_rgb[2]) < 0 || ft_atoi(splited_rgb[2]) > 255)
+	{
+		put_my_error("cub3d: Error: Invalid RGB format\n");
+		free_2d_char(splited_rgb);
+		return (false);
+	}
+	free_2d_char(splited_rgb);
+	return (true);
+}
+
+
+bool	is_usable_fale(char *file_path)
+{
+	int	fd;
+
+	file_path[ft_strlen(file_path) - 1] = '\0';
+	if (ft_strlen(file_path) < 5 || (ft_strncmp(file_path + ft_strlen(file_path) - 4, ".xpm", 4) && ft_strncmp(file_path + ft_strlen(file_path) - 4, ".png", 4)))
+	{
+		put_my_error("cub3d: Error: Invalid file path\n");
+		return (false);
+	}
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("cube3d: Error:");
+		return (false);
+	}
+	close(fd);
+	return (true);
+}
+
 bool	is_valid_non_map_info(char **input_, int *map_start_index)
 {
-	size_t	i;
-	char	**splited_line;
-	unsigned int info_flags = 0b000000; // == 0bNSWEFC
+	size_t			i;
+	char			**splited_line;
+	unsigned int	info_flags;
 
+	info_flags = 0b000000;
 	i = -1;
 	while (input_[++i] && info_flags != 0b111111)
 	{
 		if (input_[i][0] == '\n')
 			continue ;
 		splited_line = ft_split(input_[i], ' ');
-		//splited_lineの要素が２個でない場合、エラー
 		if (splited_line[0] == NULL || splited_line[1] == NULL || splited_line[2] != NULL)
 		{
-			printf("Invalid splited line\n");
-			printf("cub3d: Error: Invalid input\n");
+			put_my_error("cub3d: Error: Invalid input\n");
 			free_2d_char(splited_line);
 			return (false);
 		}
-		if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'N' && splited_line[0][1] == 'O' && !(info_flags & 0b100000))
-			info_flags |= 0b100000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'S' && splited_line[0][1] == 'O' && !(info_flags & 0b010000))
-			info_flags |= 0b010000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'W' && splited_line[0][1] == 'E' && !(info_flags & 0b001000))
-			info_flags |= 0b001000;
-		else if (ft_strlen(splited_line[0]) == 2 && splited_line[0][0] == 'E' && splited_line[0][1] == 'A' && !(info_flags & 0b000100))
-			info_flags |= 0b000100;
-		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'F' && !(info_flags & 0b000010))
-			info_flags |= 0b000010;
-		else if (ft_strlen(splited_line[0]) == 1 && splited_line[0][0] == 'C' && !(info_flags & 0b000001))
-			info_flags |= 0b000001;
+		if (ft_strlen(splited_line[0]) == 2)
+		{
+			if (splited_line[0][0] == 'N' && splited_line[0][1] == 'O' && !(info_flags & 0b100000))
+				info_flags |= 0b100000;
+			else if (splited_line[0][0] == 'S' && splited_line[0][1] == 'O' && !(info_flags & 0b010000))
+				info_flags |= 0b010000;
+			else if (splited_line[0][0] == 'W' && splited_line[0][1] == 'E' && !(info_flags & 0b001000))
+				info_flags |= 0b001000;
+			else if (splited_line[0][0] == 'E' && splited_line[0][1] == 'A' && !(info_flags & 0b000100))
+				info_flags |= 0b000100;
+			else
+			{
+				put_my_error("cub3d: Error: Invalid input\n");
+				free_2d_char(splited_line);
+				return (false);
+			}
+			if (!is_usable_fale(splited_line[1]))
+			{
+				free_2d_char(splited_line);
+				return (false);
+			}
+		}
+		else if (ft_strlen(splited_line[0]) == 1)
+		{
+			if (splited_line[0][0] == 'F' && !(info_flags & 0b000010))
+				info_flags |= 0b000010;
+			else if (splited_line[0][0] == 'C' && !(info_flags & 0b000001))
+				info_flags |= 0b000001;
+			else
+			{
+				put_my_error("cub3d: Error: Invalid input\n");
+				free_2d_char(splited_line);
+				return (false);
+			}
+			if (!is_valid_rgb_format(splited_line[1]))
+				return (false);
+		}
 		else
 		{
-			printf("cub3d: Error: Invalid input\n");
+			put_my_error("cub3d: Error: Invalid input\n");
 			free_2d_char(splited_line);
 			return (false);
 		}
@@ -58,8 +158,7 @@ bool	is_valid_non_map_info(char **input_, int *map_start_index)
 	}
 	if (info_flags != 0b111111)
 	{
-		printf("here\n");
-		printf("cub3d: Error: Invalid non_map info\n");
+		put_my_error("cub3d: Error: Invalid input\n");
 		return (false);
 	}
 	while (input_[i][0] == '\n')
@@ -67,11 +166,6 @@ bool	is_valid_non_map_info(char **input_, int *map_start_index)
 	*map_start_index = i;
 	return (true);
 }
-
-
-
-
-
 
 size_t	get_map_width(char **map)
 {
@@ -113,12 +207,12 @@ char	**add_padding(char **map, size_t map_height, size_t map_width)
 		}
 		while (++j < map_width + 1)
 		{
-			if (map[i][j-1] == '\0')
+			if (map[i][j-1] == '\n' || map[i][j-1] == '\0')
 			{
 				map_padding_[i][j] = PADDING_CHAR;
 				break ;
 			}
-			if (map[i][j-1] != ' ' && map[i][j-1] != '\n')
+			if (map[i][j-1] != ' ')
 				map_padding_[i][j] = map[i][j-1];
 			else
 				map_padding_[i][j] = PADDING_CHAR;
@@ -142,8 +236,6 @@ char	**add_padding(char **map, size_t map_height, size_t map_width)
 	return (map_padding_);
 }
 
-//mapが囲まれているかどうかの確認
-//'.'の四方隣が'1' or '.'であるかどうか
 bool	is_map_surrounded(char **map_padding_, size_t map_height, size_t map_width)
 {
 	size_t	i;
@@ -174,7 +266,6 @@ bool	is_map_surrounded(char **map_padding_, size_t map_height, size_t map_width)
 	return (true);
 }
 
-//プレイヤーの人数と、mapの文字が正しいかどうかの確認
 bool	char_check(char **map_padding_)
 {
 	size_t	i;
@@ -201,7 +292,6 @@ bool	char_check(char **map_padding_)
 	return (true);
 }
 
-//mapの valid check
 bool	is_valid_map(char **map, size_t map_height)
 {
 	char	**map_padding_;
@@ -210,22 +300,20 @@ bool	is_valid_map(char **map, size_t map_height)
 	map_width = get_map_width(map);
 	if (map_width > MAX_MAP_SIZE || map_height > MAX_MAP_SIZE)
 	{
-		printf("too big map\n");
-		printf("cub3d: Error: Invalid map\n");
+		put_my_error("cub3d: Error: Invalid map\n");
 		return (false);
 	}
 	map_padding_ = add_padding(map, map_height, map_width);
 	if (!is_map_surrounded(map_padding_, map_height, map_width))
 	{
 		free_2d_char(map_padding_);
-		printf("map is not surrounded\n");
-		printf("cub3d: Error: Invalid map\n");
+		put_my_error("cub3d: Error: Invalid map\n");
 		return (false);
 	}
 	if (!char_check(map_padding_))
 	{
 		free_2d_char(map_padding_);
-		printf("cub3d: Error: Invalid map\n");
+		put_my_error("cub3d: Error: Invalid map\n");
 		return (false);
 	}
 	free_2d_char(map_padding_);
@@ -239,7 +327,7 @@ bool	is_valid_cub_file(char **input_, size_t input_height)
 
 	if (!is_valid_non_map_info(input_, &map_start_index))
 		return (false);
-	map = &input_[map_start_index-1];
+	map = &input_[map_start_index - 1];
 	if (!is_valid_map(map, input_height - map_start_index))
 		return (false);
 	return (true);
@@ -249,17 +337,16 @@ void	is_arg_valid(int argc, char *argv[])
 {
 	char	**input_;
 	size_t	input_height;
-	//size_t	i;
 
 	(void)argv;
 	if (argc != 2)
 	{
-		printf("cub3d: Notice: ./cub3d [filename]\n");
+		put_my_error("cub3d: Notice: ./cub3d [filename]\n");
 		exit(EXIT_SUCCESS);
 	}
 	if (ft_strlen(argv[1]) < 5 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
 	{
-		printf("cub3d: Error: Invalid file\n");
+		put_my_error("cub3d: Error: Invalid file path\n");
 		exit(EXIT_SUCCESS);
 	}
 	input_height = get_input_height(argv[1]);
