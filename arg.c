@@ -42,7 +42,7 @@ bool	is_valid_rgb_format(char *rgb_str)
 {
 	char	**splited_rgb;
 
-	if (count_char_occurrences(rgb_str, ',') != 2 || ft_strlen(rgb_str) < 5 || ft_strlen(rgb_str) > 11)
+	if (count_char_occurrences(rgb_str, ',') != 2 || ft_strlen(rgb_str) < 5 || ft_strlen(rgb_str) > 12)
 	{
 		put_my_error("cub3d: Error: Invalid RGB format\n");
 		return (false);

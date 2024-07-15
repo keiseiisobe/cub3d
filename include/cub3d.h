@@ -104,8 +104,8 @@ typedef struct	s_map_info
 
 	// just non map info
 	t_texture_info	texture_info;
-	int				ceiling_color[3]; // Ceiling
-	int				floor_color[3]; // Floor
+	unsigned char	ceiling_color[4]; // Ceiling
+	unsigned char	floor_color[4]; // Floor
 }	t_map_info;
 
 typedef struct s_player_info

@@ -64,7 +64,7 @@ int	event_handler(int keycode, t_cub3d *info)
 	if (keycode == ESC)
 	{
 		printf("exit\n");
-//		destroy_all_image(info); this can cause segv... why ?
+//		destroy_all_image(info); //this can cause segv... why ?
 		mlx_destroy_window(info->mlx_info.mlx, info->mlx_info.mlx_win);
 		free_all(&info->map_info);
 		exit(EXIT_SUCCESS);

@@ -1,9 +1,9 @@
-NO ./texture/xpm/north_61.xpm
-SO ./texture/xpm/south_61.xpm
-WE ./texture/xpm/west_61.xpm
-EA ./texture/xpm/east_61.xpm
-F 220,100,0
-C 225,30,0
+NO ./texture/png/minecraft_bush.png
+SO ./texture/png/minecraft_wood.png
+WE ./texture/png/minecraft_rock.png
+EA ./texture/png/minecraft_sand.png
+F 74,111,40
+C 126,208,242
 
         1111111111111111111111111
         1000000000110000000000001

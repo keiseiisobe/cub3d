@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	draw_floor(t_mlx_info *mlx_info)
+void	draw_floor(t_mlx_info *mlx_info, t_map_info *map_info)
 {
 	size_t	begin_y;
 	size_t	end_y;
@@ -11,7 +11,7 @@ void	draw_floor(t_mlx_info *mlx_info)
 	begin_y = mlx_info->win_height / 2;
 	end_y = mlx_info->win_height;
 	end_x = mlx_info->win_width;
-	color = 0x4A6F28;
+	color = *(int *)map_info->floor_color;
 	while (begin_y < end_y)
 	{
 		begin_x = 0;
@@ -24,7 +24,7 @@ void	draw_floor(t_mlx_info *mlx_info)
 	}
 }
 
-void	draw_ceiling(t_mlx_info *mlx_info)
+void	draw_ceiling(t_mlx_info *mlx_info, t_map_info *map_info)
 {
 	size_t	begin_y;
 	size_t	end_y;
@@ -35,7 +35,7 @@ void	draw_ceiling(t_mlx_info *mlx_info)
 	begin_y = 0;
 	end_y = mlx_info->win_height / 2;
 	end_x = mlx_info->win_width;
-	color = 0x7ED0F2;
+	color = *(int *)map_info->ceiling_color;
 	while (begin_y < end_y)
 	{
 		begin_x = 0;
@@ -235,8 +235,8 @@ void	draw_loop(t_cub3d *info)
 	size_t	wall_height;
 
 	i = 0;
-	draw_floor(&info->mlx_info);
-	draw_ceiling(&info->mlx_info);
+	draw_floor(&info->mlx_info, &info->map_info);
+	draw_ceiling(&info->mlx_info, &info->map_info);
 	while (i < info->mlx_info.win_width)
 	{
 		ready_to_raycast(&info->mlx_info, &info->player_info, i);

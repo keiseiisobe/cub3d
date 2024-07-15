@@ -96,16 +96,18 @@ void	get_non_map_info(t_map_info *map_info)
 		else if (splited_line[0][0] == 'C')
 		{
 			rgb_splited_line = ft_split(splited_line[1], ',');
-			map_info->ceiling_color[0] = ft_atoi(rgb_splited_line[0]);
+			map_info->ceiling_color[0] = ft_atoi(rgb_splited_line[2]);
 			map_info->ceiling_color[1] = ft_atoi(rgb_splited_line[1]);
-			map_info->ceiling_color[2] = ft_atoi(rgb_splited_line[2]);
+			map_info->ceiling_color[2] = ft_atoi(rgb_splited_line[0]);
+			map_info->ceiling_color[3] = 0;
 		}
 		else if (splited_line[0][0] == 'F')
 		{
 			rgb_splited_line = ft_split(splited_line[1], ',');
-			map_info->floor_color[0] = ft_atoi(rgb_splited_line[0]);
+			map_info->floor_color[0] = ft_atoi(rgb_splited_line[2]);
 			map_info->floor_color[1] = ft_atoi(rgb_splited_line[1]);
-			map_info->floor_color[2] = ft_atoi(rgb_splited_line[2]);
+			map_info->floor_color[2] = ft_atoi(rgb_splited_line[0]);
+			map_info->floor_color[3] = 0;
 		}
 		if (splited_line[0][0] == 'C' || splited_line[0][0] == 'F')
 		{
@@ -150,7 +152,7 @@ void	get_non_map_info(t_map_info *map_info)
 			printf("EA: PNG %s\n", map_info->texture_info.east_texture_filename_);
 		else
 			printf("EA: XPM %s\n", map_info->texture_info.east_texture_filename_);
-		printf("C: %d, %d, %d\n", map_info->ceiling_color[0], map_info->ceiling_color[1], map_info->ceiling_color[2]);
+		printf("C: %d, %d, %d\n", map_info->ceiling_color[1], map_info->ceiling_color[2], map_info->ceiling_color[3]);
 		printf("F: %d, %d, %d\n", map_info->floor_color[0], map_info->floor_color[1], map_info->floor_color[2]);
 		printf("========================\n");
 	}
