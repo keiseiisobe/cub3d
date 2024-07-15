@@ -1,4 +1,4 @@
-#include "xmalloc.h"
+#include "include/cub3d.h"
 
 void	*xmalloc(size_t size)
 {

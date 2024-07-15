@@ -20,8 +20,9 @@ int	main(int argc, char *argv[])
 	get_map_info(&info.map_info, argv[1]);
 	get_player_initial_info(&info.player_info, &info.map_info);
 	initialize_mlx(&info.mlx_info);
+	initialize_texture(&info);
 	game(&info);
 	mlx_hook(info.mlx_info.mlx_win, 2, 0, event_handler, &info);
-	mlx_hook(info.mlx_info.mlx_win, 17, 0, X_bottun_handler, &info);
+	mlx_hook(info.mlx_info.mlx_win, 17, 0, x_bottun_handler, &info);
 	mlx_loop(info.mlx_info.mlx);
 }

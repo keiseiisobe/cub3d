@@ -37,14 +37,13 @@ SRCS = main.c \
 		event.c \
 		move.c \
 		init_mlx.c \
+		init_texture.c \
 		game.c \
 		draw.c \
 		error.c \
 		arg.c \
 		xmalloc.c \
 		mlx_utils.c \
-		gnl/get_next_line.c \
-		gnl/get_next_line_utils.c
 
 OBJS 	= $(SRCS:%.c=%.o)
 

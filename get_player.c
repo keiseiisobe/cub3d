@@ -31,16 +31,6 @@ static void	get_player_direction(t_player_info *player_info, char player_directi
 	}
 }
 
-int	ft_strlen(const char *str)
-{
-	int	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
 static void	get_player_position(t_player_info *player_info, t_map_info *map_info)
 {
 	int	x;
@@ -61,8 +51,8 @@ static void	get_player_position(t_player_info *player_info, t_map_info *map_info
 			break ;
 		y++;
 	}
-	player_info->pos_x = (double)x + 0.5;
-	player_info->pos_y = (double)y + 0.5;
+	player_info->pos_x = (double)x + 0.4;
+	player_info->pos_y = (double)y + 0.4;
 	get_player_direction(player_info, map_info->map[y][x]);
 }
 
