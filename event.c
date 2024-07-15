@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:20:02 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 02:20:03 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 02:54:27 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	destroy_all_image(t_cub3d *info)
 void	free_all(t_map_info *map_info)
 {
 	free_2d_char(map_info->input_);
-	free(map_info->texture_info.north_texture_filename_);
-	free(map_info->texture_info.south_texture_filename_);
-	free(map_info->texture_info.west_texture_filename_);
-	free(map_info->texture_info.east_texture_filename_);
+	free(map_info->texture_info.north_tex_filename_);
+	free(map_info->texture_info.south_tex_filename_);
+	free(map_info->texture_info.west_tex_filename_);
+	free(map_info->texture_info.east_tex_filename_);
 }
 
 void	move_handler(int keycode, t_cub3d *info)

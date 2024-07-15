@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:07:58 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 02:16:32 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 02:54:27 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,27 @@ typedef struct s_texture_info
 {
 	void	*mlx;
 
-	char	*north_texture_filename_;
-	int		north_tex_width;
-	int		north_tex_height;
+	char	*north_tex_filename_;
+	int		north_tex_w;
+	int		north_tex_h;
 	bool	north_is_png;
 	t_data	north_img;
 
-	char	*south_texture_filename_;
-	int		south_tex_width;
-	int		south_tex_height;
+	char	*south_tex_filename_;
+	int		south_tex_w;
+	int		south_tex_h;
 	bool	south_is_png;
 	t_data	south_img;
 
-	char	*west_texture_filename_;
-	int		west_tex_width;
-	int		west_tex_height;
+	char	*west_tex_filename_;
+	int		west_tex_w;
+	int		west_tex_h;
 	bool	west_is_png;
 	t_data	west_img;
 
-	char	*east_texture_filename_;
-	int		east_tex_width;
-	int		east_tex_height;
+	char	*east_tex_filename_;
+	int		east_tex_w;
+	int		east_tex_h;
 	bool	east_is_png;
 	t_data	east_img;
 }	t_texture_info;

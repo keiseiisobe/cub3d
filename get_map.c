@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:19:44 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 02:19:49 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 02:54:27 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	set_walls_info(char *fn, t_texture_info *tex_info, char d)
 {
 	fn[ft_strlen(fn) - 1] = '\0';
 	if (d == 'N')
-		tex_info->north_texture_filename_ = ft_strdup(fn);
+		tex_info->north_tex_filename_ = ft_strdup(fn);
 	else if (d == 'S')
-		tex_info->south_texture_filename_ = ft_strdup(fn);
+		tex_info->south_tex_filename_ = ft_strdup(fn);
 	else if (d == 'W')
-		tex_info->west_texture_filename_ = ft_strdup(fn);
+		tex_info->west_tex_filename_ = ft_strdup(fn);
 	else if (d == 'E')
-		tex_info->east_texture_filename_ = ft_strdup(fn);
+		tex_info->east_tex_filename_ = ft_strdup(fn);
 	if (d == 'N')
 		tex_info->north_is_png = is_png(fn);
 	else if (d == 'S')
@@ -149,21 +149,21 @@ void	get_non_map_info(t_map_info *map_info)
 	{
 		printf("===== non_map info =====\n");
 		if (map_info->texture_info.north_is_png)
-			printf("NO: PNG %s\n", map_info->texture_info.north_texture_filename_);
+			printf("NO: PNG %s\n", map_info->texture_info.north_tex_filename_);
 		else
-			printf("NO: XPM %s\n", map_info->texture_info.north_texture_filename_);
+			printf("NO: XPM %s\n", map_info->texture_info.north_tex_filename_);
 		if (map_info->texture_info.south_is_png)
-			printf("SO: PNG %s\n", map_info->texture_info.south_texture_filename_);
+			printf("SO: PNG %s\n", map_info->texture_info.south_tex_filename_);
 		else
-			printf("SO: XPM %s\n", map_info->texture_info.south_texture_filename_);
+			printf("SO: XPM %s\n", map_info->texture_info.south_tex_filename_);
 		if (map_info->texture_info.west_is_png)
-			printf("WE: PNG %s\n", map_info->texture_info.west_texture_filename_);
+			printf("WE: PNG %s\n", map_info->texture_info.west_tex_filename_);
 		else
-			printf("WE: XPM %s\n", map_info->texture_info.west_texture_filename_);
+			printf("WE: XPM %s\n", map_info->texture_info.west_tex_filename_);
 		if (map_info->texture_info.east_is_png)
-			printf("EA: PNG %s\n", map_info->texture_info.east_texture_filename_);
+			printf("EA: PNG %s\n", map_info->texture_info.east_tex_filename_);
 		else
-			printf("EA: XPM %s\n", map_info->texture_info.east_texture_filename_);
+			printf("EA: XPM %s\n", map_info->texture_info.east_tex_filename_);
 		printf("C: %d, %d, %d\n", map_info->ceiling_color[2], map_info->ceiling_color[1], map_info->ceiling_color[0]);
 		printf("F: %d, %d, %d\n", map_info->floor_color[2], map_info->floor_color[1], map_info->floor_color[0]);
 		printf("========================\n");

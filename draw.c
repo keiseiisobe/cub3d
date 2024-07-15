@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:20:20 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 02:20:20 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 02:53:54 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,23 +174,23 @@ void	get_tex_width_and_height(t_draw_info *draw_info,
 {
 	if (wall_side == NORTH)
 	{
-		draw_info->tex_width = texture_info->north_tex_width;
-		draw_info->tex_height = texture_info->north_tex_height;
+		draw_info->tex_width = texture_info->north_tex_w;
+		draw_info->tex_height = texture_info->north_tex_h;
 	}
 	else if (wall_side == SOUTH)
 	{
-		draw_info->tex_width = texture_info->south_tex_width;
-		draw_info->tex_height = texture_info->south_tex_height;
+		draw_info->tex_width = texture_info->south_tex_w;
+		draw_info->tex_height = texture_info->south_tex_h;
 	}
 	else if (wall_side == WEST)
 	{
-		draw_info->tex_width = texture_info->west_tex_width;
-		draw_info->tex_height = texture_info->west_tex_height;
+		draw_info->tex_width = texture_info->west_tex_w;
+		draw_info->tex_height = texture_info->west_tex_h;
 	}
 	else // (wall_side == EAST)
 	{
-		draw_info->tex_width = texture_info->east_tex_width;
-		draw_info->tex_height = texture_info->east_tex_height;
+		draw_info->tex_width = texture_info->east_tex_w;
+		draw_info->tex_height = texture_info->east_tex_h;
 	}
 }
 
