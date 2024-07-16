@@ -6,7 +6,7 @@
 #    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
-#    Updated: 2024/07/16 02:16:06 by miyazawa.ka      ###   ########.fr        #
+#    Updated: 2024/07/16 10:49:15 by miyazawa.ka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ INCDIR = include/
 
 SRCS = main.c \
 		get_map.c \
+		get_map2.c \
 		get_player.c \
 		event.c \
 		move.c \
@@ -45,6 +46,7 @@ SRCS = main.c \
 		arg.c \
 		xmalloc.c \
 		mlx_utils.c \
+		debug.c
 
 OBJS 	= $(SRCS:%.c=%.o)
 

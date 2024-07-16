@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:07:58 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 02:54:27 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 10:48:27 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,11 @@ void	free_2d_char(char **str);
 
 // get_map.c
 void	get_map_info(t_map_info *map_info, char *filename);
+
+// get_map2.c
 size_t	get_input_height(char *filename);
 char	**get_input(char *filename, size_t height);
+
 
 // get_player.c
 void	get_player_initial_info(t_player_info *player_info,
@@ -208,5 +211,9 @@ void	*xmalloc(size_t size);
 // error.c
 void	handle_error(bool is_error);
 void	put_my_error(const char *msg);
+
+// debug.c
+void	print_non_map_info(t_map_info *map_info);
+void	print_map_info(t_map_info *map_info);
 
 #endif
