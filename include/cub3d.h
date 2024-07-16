@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:07:58 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 10:48:27 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 13:40:07 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,9 @@ bool	is_not_wall(t_player_info *player_info,
 
 // xmalloc.c
 void	*xmalloc(size_t size);
+void	destroy_all_image(t_cub3d *info);
+void	free_all(t_map_info *map_info);
+
 
 // error.c
 void	handle_error(bool is_error);
