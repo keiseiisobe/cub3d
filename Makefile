@@ -6,7 +6,7 @@
 #    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
-#    Updated: 2024/07/16 10:49:15 by miyazawa.ka      ###   ########.fr        #
+#    Updated: 2024/07/16 15:04:35 by miyazawa.ka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS = main.c \
 		init_texture.c \
 		game.c \
 		draw.c \
+		draw2.c \
 		error.c \
 		arg.c \
 		xmalloc.c \

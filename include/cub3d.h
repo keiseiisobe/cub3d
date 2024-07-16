@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:07:58 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 13:40:07 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 15:05:33 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,10 @@ void	game(t_cub3d *info);
 
 // draw.c
 void	draw_loop(t_cub3d *info);
+
+// draw2.c
+void	draw_vertical_line(t_cub3d *info, size_t wall_height, size_t i);
+size_t	get_wall_height(t_player_info *player_info);
 
 // mlx_utils.c
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
