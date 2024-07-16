@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:07:58 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 15:05:33 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 19:08:40 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define BACKWARD 2
 # define LEFT 3
 # define RIGHT 4
+
+#define PADDING '.'
 
 # define DEBUG 1
 //# define DEBUG 0
@@ -159,8 +161,21 @@ typedef struct s_draw_info
 }	t_draw_info;
 
 // arg.c
+bool	is_usable_file(char *fp);
 void	is_arg_valid(int argc, char *argv[]);
-void	free_2d_char(char **str);
+
+// arg2.c
+bool	is_valid_rgb_format(char *rgb_str);
+
+// arg3.c
+bool	is_valid_map(char **map, size_t map_height);
+
+// arg4.c
+char	**add_padding(char **map, size_t height, size_t width);
+
+
+// arg5.c
+bool	is_valid_non_map_info(char **input_, int *map_start_index);
 
 // get_map.c
 void	get_map_info(t_map_info *map_info, char *filename);
@@ -168,6 +183,7 @@ void	get_map_info(t_map_info *map_info, char *filename);
 // get_map2.c
 size_t	get_input_height(char *filename);
 char	**get_input(char *filename, size_t height);
+size_t	get_map_width(char **map);
 
 
 // get_player.c
@@ -213,6 +229,7 @@ bool	is_not_wall(t_player_info *player_info,
 void	*xmalloc(size_t size);
 void	destroy_all_image(t_cub3d *info);
 void	free_all(t_map_info *map_info);
+void	free_2d_char(char **str);
 
 
 // error.c
@@ -222,5 +239,7 @@ void	put_my_error(const char *msg);
 // debug.c
 void	print_non_map_info(t_map_info *map_info);
 void	print_map_info(t_map_info *map_info);
+void	print_padding_map(char **map_padding_);
+
 
 #endif

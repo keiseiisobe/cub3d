@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 10:47:45 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 10:48:07 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 15:55:10 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,22 @@ char	**get_input(char *filename, size_t height)
 	input[i] = NULL;
 	close(fd);
 	return (input);
+}
+
+size_t	get_map_width(char **map)
+{
+	size_t	i;
+	size_t	max_width;
+	size_t	width;
+
+	i = 0;
+	max_width = 0;
+	while (map[i])
+	{
+		width = ft_strlen(map[i]);
+		if (width > max_width)
+			max_width = width;
+		i++;
+	}
+	return (max_width);
 }

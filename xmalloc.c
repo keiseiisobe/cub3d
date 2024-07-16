@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:12:38 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 13:39:53 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 15:13:51 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,14 @@ void	free_all(t_map_info *map_info)
 	free(map_info->texture_info.south_tex_filename_);
 	free(map_info->texture_info.west_tex_filename_);
 	free(map_info->texture_info.east_tex_filename_);
+}
+
+void	free_2d_char(char **str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
 }

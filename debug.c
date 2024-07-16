@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 03:04:16 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 13:48:29 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/16 15:37:59 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,23 @@ void	print_map_info(t_map_info *map_info)
 			i++;
 		}
 		printf("\n==================\n");
+	}
+}
+
+void	print_padding_map(char **map_padding_)
+{
+	size_t	i;
+
+	if (DEBUG)
+	{
+		printf("map_padding_ ==================\n");
+		i = 0;
+		while (map_padding_[i])
+		{
+			printf("map[%zu]: %s$\n", i % 10,
+				map_padding_[i]);
+			i++;
+		}
+		printf("map_padding_ ==================\n");
 	}
 }
