@@ -1,13 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_player.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 02:19:21 by miyazawa.ka       #+#    #+#             */
+/*   Updated: 2024/07/16 03:01:38 by miyazawa.ka      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static bool	is_player(char map_elem)
 {
-	if (map_elem == 'N' || map_elem == 'S' || map_elem == 'W' || map_elem == 'E')
+	if (map_elem == 'N' || map_elem == 'S'
+		|| map_elem == 'W' || map_elem == 'E')
 		return (true);
 	return (false);
 }
 
-static void	get_player_direction(t_player_info *player_info, char player_direction)
+static void	get_player_direction(t_player_info *player_info,
+	char player_direction)
 {
 	if (player_direction == 'N')
 	{
@@ -31,9 +45,10 @@ static void	get_player_direction(t_player_info *player_info, char player_directi
 	}
 }
 
-static void	get_player_position(t_player_info *player_info, t_map_info *map_info)
+static void	get_player_position(t_player_info *player_info,
+	t_map_info *map_info)
 {
-	int	x;
+	int		x;
 	size_t	y;
 
 	y = 0;
@@ -42,7 +57,6 @@ static void	get_player_position(t_player_info *player_info, t_map_info *map_info
 		x = 0;
 		while (x < ft_strlen(map_info->map[y]))
 		{
-			// if there are no player ?? is it handled in init.c ?
 			if (is_player(map_info->map[y][x]))
 				break ;
 			x++;
@@ -56,25 +70,26 @@ static void	get_player_position(t_player_info *player_info, t_map_info *map_info
 	get_player_direction(player_info, map_info->map[y][x]);
 }
 
-void	get_player_initial_info(t_player_info *player_info, t_map_info *map_info)
+void	get_player_initial_info(t_player_info *player_info,
+	t_map_info *map_info)
 {
 	get_player_position(player_info, map_info);
-	if (player_info->dir_x == 0 && player_info->dir_y == -1) // North
+	if (player_info->dir_x == 0 && player_info->dir_y == -1)
 	{
 		player_info->plane_x = 0.66;
 		player_info->plane_y = 0;
 	}
-	else if (player_info->dir_x == 0 && player_info->dir_y == 1) // South
+	else if (player_info->dir_x == 0 && player_info->dir_y == 1)
 	{
 		player_info->plane_x = -0.66;
 		player_info->plane_y = 0;
 	}
-	else if (player_info->dir_x == -1 && player_info->dir_y == 0) // West
+	else if (player_info->dir_x == -1 && player_info->dir_y == 0)
 	{
 		player_info->plane_x = 0;
 		player_info->plane_y = -0.66;
 	}
-	else // East
+	else if (player_info->dir_x == 1 && player_info->dir_y == 0)
 	{
 		player_info->plane_x = 0;
 		player_info->plane_y = 0.66;

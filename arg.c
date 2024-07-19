@@ -1,322 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arg.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 02:20:25 by miyazawa.ka       #+#    #+#             */
+/*   Updated: 2024/07/16 19:07:00 by miyazawa.ka      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-#define PADDING_CHAR '.'
-
-void	free_2d_char(char **str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
-}
-
-int	count_char_occurrences(const char *str, char target)
-{
-	int	count;
-
-	count = 0;
-	while (*str != '\0')
-	{
-		if (*str == target)
-			count++;
-		str++;
-	}
-	return (count);
-}
-
-bool	is_digit_str(char *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (false);
-		str++;
-	}
-	return (true);
-}
-
-
-bool	is_valid_rgb_format(char *rgb_str)
-{
-	char	**splited_rgb;
-
-	if (count_char_occurrences(rgb_str, ',') != 2 || ft_strlen(rgb_str) < 5 || ft_strlen(rgb_str) > 12)
-	{
-		put_my_error("cub3d: Error: Invalid RGB format\n");
-		return (false);
-	}
-	rgb_str[ft_strlen(rgb_str) - 1] = '\0';
-	splited_rgb = ft_split(rgb_str, ',');
-	if (splited_rgb[0] == NULL || splited_rgb[1] == NULL || splited_rgb[2] == NULL || splited_rgb[3] != NULL)
-	{
-		put_my_error("cub3d: Error: Invalid RGB format\n");
-		free_2d_char(splited_rgb);
-		return (false);
-	}
-	if (!is_digit_str(splited_rgb[0]) || !is_digit_str(splited_rgb[1]) || !is_digit_str(splited_rgb[2]))
-	{
-		put_my_error("cub3d: Error: Invalid RGB format\n");
-		free_2d_char(splited_rgb);
-		return (false);
-	}
-	if (ft_atoi(splited_rgb[0]) < 0 || ft_atoi(splited_rgb[0]) > 255 || ft_atoi(splited_rgb[1]) < 0 || ft_atoi(splited_rgb[1]) > 255 || ft_atoi(splited_rgb[2]) < 0 || ft_atoi(splited_rgb[2]) > 255)
-	{
-		put_my_error("cub3d: Error: Invalid RGB format\n");
-		free_2d_char(splited_rgb);
-		return (false);
-	}
-	free_2d_char(splited_rgb);
-	return (true);
-}
-
-
-bool	is_usable_fale(char *file_path)
+bool	is_usable_file(char *fp)
 {
 	int	fd;
 
-	file_path[ft_strlen(file_path) - 1] = '\0';
-	if (ft_strlen(file_path) < 5 || (ft_strncmp(file_path + ft_strlen(file_path) - 4, ".xpm", 4) && ft_strncmp(file_path + ft_strlen(file_path) - 4, ".png", 4)))
+	fp[ft_strlen(fp) - 1] = '\0';
+	if (ft_strlen(fp) < 5 || (ft_strncmp(fp + ft_strlen(fp) - 4, ".xpm", 4)
+			&& ft_strncmp(fp + ft_strlen(fp) - 4, ".png", 4)))
 	{
 		put_my_error("cub3d: Error: Invalid file path\n");
 		return (false);
 	}
-	fd = open(file_path, O_RDONLY);
+	fd = open(fp, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("cube3d: Error:");
 		return (false);
 	}
 	close(fd);
-	return (true);
-}
-
-bool	is_valid_non_map_info(char **input_, int *map_start_index)
-{
-	size_t			i;
-	char			**splited_line;
-	unsigned int	info_flags;
-
-	info_flags = 0b000000;
-	i = -1;
-	while (input_[++i] && info_flags != 0b111111)
-	{
-		if (input_[i][0] == '\n')
-			continue ;
-		splited_line = ft_split(input_[i], ' ');
-		if (splited_line[0] == NULL || splited_line[1] == NULL || splited_line[2] != NULL)
-		{
-			put_my_error("cub3d: Error: Invalid input\n");
-			free_2d_char(splited_line);
-			return (false);
-		}
-		if (ft_strlen(splited_line[0]) == 2)
-		{
-			if (splited_line[0][0] == 'N' && splited_line[0][1] == 'O' && !(info_flags & 0b100000))
-				info_flags |= 0b100000;
-			else if (splited_line[0][0] == 'S' && splited_line[0][1] == 'O' && !(info_flags & 0b010000))
-				info_flags |= 0b010000;
-			else if (splited_line[0][0] == 'W' && splited_line[0][1] == 'E' && !(info_flags & 0b001000))
-				info_flags |= 0b001000;
-			else if (splited_line[0][0] == 'E' && splited_line[0][1] == 'A' && !(info_flags & 0b000100))
-				info_flags |= 0b000100;
-			else
-			{
-				put_my_error("cub3d: Error: Invalid input\n");
-				free_2d_char(splited_line);
-				return (false);
-			}
-			if (!is_usable_fale(splited_line[1]))
-			{
-				free_2d_char(splited_line);
-				return (false);
-			}
-		}
-		else if (ft_strlen(splited_line[0]) == 1)
-		{
-			if (splited_line[0][0] == 'F' && !(info_flags & 0b000010))
-				info_flags |= 0b000010;
-			else if (splited_line[0][0] == 'C' && !(info_flags & 0b000001))
-				info_flags |= 0b000001;
-			else
-			{
-				put_my_error("cub3d: Error: Invalid input\n");
-				free_2d_char(splited_line);
-				return (false);
-			}
-			if (!is_valid_rgb_format(splited_line[1]))
-				return (false);
-		}
-		else
-		{
-			put_my_error("cub3d: Error: Invalid input\n");
-			free_2d_char(splited_line);
-			return (false);
-		}
-		free_2d_char(splited_line);
-	}
-	if (info_flags != 0b111111)
-	{
-		put_my_error("cub3d: Error: Invalid input\n");
-		return (false);
-	}
-	while (input_[i][0] == '\n')
-		i++;
-	*map_start_index = i;
-	return (true);
-}
-
-size_t	get_map_width(char **map)
-{
-	size_t	i;
-	size_t	max_width;
-	size_t	width;
-
-	i = 0;
-	max_width = 0;
-	while (map[i])
-	{
-		width = ft_strlen(map[i]);
-		if (width > max_width)
-			max_width = width;
-		i++;
-	}
-	return (max_width);
-}
-
-char	**add_padding(char **map, size_t map_height, size_t map_width)
-{
-	char	**map_padding_;
-	size_t	i;
-	size_t	j;
-
-	map_padding_ = xmalloc(sizeof(char *) * (map_height + 3));
-	i = -1;
-	while (++i < map_height + 2)
-	{
-		map_padding_[i] = xmalloc(sizeof(char) * (map_width + 3));
-		j = 0;
-		map_padding_[i][j] = PADDING_CHAR;
-		if (i == 0 || i == map_height + 1)
-		{
-			while (++j < map_width + 1)
-				map_padding_[i][j] = PADDING_CHAR;
-			map_padding_[i][j] = '\0';
-			continue ;
-		}
-		while (++j < map_width + 1)
-		{
-			if (map[i][j-1] == '\n' || map[i][j-1] == '\0')
-			{
-				map_padding_[i][j] = PADDING_CHAR;
-				break ;
-			}
-			if (map[i][j-1] != ' ')
-				map_padding_[i][j] = map[i][j-1];
-			else
-				map_padding_[i][j] = PADDING_CHAR;
-		}
-		while (++j < map_width + 1)
-			map_padding_[i][j] = PADDING_CHAR;
-		map_padding_[i][j] = '\0';
-	}
-	map_padding_[i] = NULL;
-	if (DEBUG)
-	{
-		printf("map_padding_ ==================\n");
-		i = 0;
-		while (map_padding_[i])
-		{
-			printf("map[%zu]: %s$\n", i%10, map_padding_[i]);
-			i++;
-		}
-		printf("map_padding_ ==================\n");
-	}
-	return (map_padding_);
-}
-
-bool	is_map_surrounded(char **map_padding_, size_t map_height, size_t map_width)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (map_padding_[i])
-	{
-		j = 0;
-		while (map_padding_[i][j])
-		{
-			if (map_padding_[i][j] == PADDING_CHAR)
-			{
-				if (i > 1 && map_padding_[i-1][j] != '1' && map_padding_[i-1][j] != PADDING_CHAR)
-					return (false);
-				if (i < map_height && map_padding_[i+1][j] != '1' && map_padding_[i+1][j] != PADDING_CHAR)
-					return (false);
-				if (j > 1 && map_padding_[i][j-1] != '1' && map_padding_[i][j-1] != PADDING_CHAR)
-					return (false);
-				if (j < map_width && map_padding_[i][j+1] != '1' && map_padding_[i][j+1] != PADDING_CHAR)
-					return (false);
-			}
-			j++;
-		}
-		i++;
-	}
-
-	return (true);
-}
-
-bool	char_check(char **map_padding_)
-{
-	size_t	i;
-	size_t	j;
-	size_t	player_count;
-
-	i = 0;
-	player_count = 0;
-	while (map_padding_[i])
-	{
-		j = 0;
-		while (map_padding_[i][j])
-		{
-			if (map_padding_[i][j] == 'N' || map_padding_[i][j] == 'S' || map_padding_[i][j] == 'W' || map_padding_[i][j] == 'E')
-				player_count++;
-			else if (map_padding_[i][j] != '1' && map_padding_[i][j] != '0' && map_padding_[i][j] != PADDING_CHAR)
-				return (false);
-			j++;
-		}
-		i++;
-	}
-	if (player_count != 1)
-		return (false);
-	return (true);
-}
-
-bool	is_valid_map(char **map, size_t map_height)
-{
-	char	**map_padding_;
-	size_t	map_width;
-
-	map_width = get_map_width(map);
-	if (map_width > MAX_MAP_SIZE || map_height > MAX_MAP_SIZE)
-	{
-		put_my_error("cub3d: Error: Invalid map\n");
-		return (false);
-	}
-	map_padding_ = add_padding(map, map_height, map_width);
-	if (!is_map_surrounded(map_padding_, map_height, map_width))
-	{
-		free_2d_char(map_padding_);
-		put_my_error("cub3d: Error: Invalid map\n");
-		return (false);
-	}
-	if (!char_check(map_padding_))
-	{
-		free_2d_char(map_padding_);
-		put_my_error("cub3d: Error: Invalid map\n");
-		return (false);
-	}
-	free_2d_char(map_padding_);
 	return (true);
 }
 
@@ -344,7 +57,8 @@ void	is_arg_valid(int argc, char *argv[])
 		put_my_error("cub3d: Notice: ./cub3d [filename]\n");
 		exit(EXIT_SUCCESS);
 	}
-	if (ft_strlen(argv[1]) < 5 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
+	if (ft_strlen(argv[1]) < 5
+		|| ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
 	{
 		put_my_error("cub3d: Error: Invalid file path\n");
 		exit(EXIT_SUCCESS);

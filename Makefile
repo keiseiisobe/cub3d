@@ -6,7 +6,7 @@
 #    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
-#    Updated: 2024/07/09 15:48:12 by miyazawa.ka      ###   ########.fr        #
+#    Updated: 2024/07/16 18:34:02 by miyazawa.ka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,17 +33,25 @@ INCDIR = include/
 
 SRCS = main.c \
 		get_map.c \
+		get_map2.c \
 		get_player.c \
 		event.c \
 		move.c \
+		move2.c \
 		init_mlx.c \
 		init_texture.c \
 		game.c \
 		draw.c \
+		draw2.c \
 		error.c \
 		arg.c \
+		arg2.c \
+		arg3.c \
+		arg4.c \
+		arg5.c \
 		xmalloc.c \
 		mlx_utils.c \
+		debug.c
 
 OBJS 	= $(SRCS:%.c=%.o)
 
@@ -53,12 +61,12 @@ all: $(NAME)
 	${CC} ${CFLAGS} -o $@ -c $< -I ${INCDIR} -I $(FTLIB) -I $(MINILIB)
 
 $(MLX) :
-	cd 	"$(PWD)/$(MINILIB)" && make
-	cd 	"$(PWD)/$(MINILIB)" && cp $(MLX) ../$(MLX)
+	make -C $(MINILIB)
+	cp $(MINILIB)/$(MLX) .
 
 $(FT) :
-	cd 	"$(PWD)/$(FTDIR)" && make
-	cd 	"$(PWD)/$(FTDIR)" && cp $(FT) ../$(FT)
+	make -C $(FTLIB)
+	cp $(FTLIB)/$(FT) .
 
 $(NAME) : $(OBJS) $(MLX) $(FT)
 	$(CC) $(OBJS) $(MLX) $(FT) $(MLXFLAG) -o $(NAME)
@@ -69,7 +77,9 @@ clean:
 
 fclean: clean
 	$(MAKE) -C $(FTLIB) fclean
+	rm -rf $(FT)
 	$(MAKE) -C $(MINILIB) clean
+	rm -rf $(MLX)
 	rm -rf $(NAME)
 
 re: fclean all
@@ -78,6 +88,8 @@ j: all
 	./cub3d maps/simple.cub
 
 min: all
+	make
+	make clean
 	./cub3d maps/valid/minimalist.cub
 
 kill_mlx:

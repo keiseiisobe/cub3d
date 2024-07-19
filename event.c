@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 02:20:02 by miyazawa.ka       #+#    #+#             */
+/*   Updated: 2024/07/16 13:40:20 by miyazawa.ka      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	render_next_image(t_mlx_info *mlx_info, t_cub3d *info)
@@ -12,43 +24,21 @@ static void	render_next_image(t_mlx_info *mlx_info, t_cub3d *info)
 	game(info);
 }
 
-void	destroy_all_image(t_cub3d *info)
-{
-	mlx_destroy_image(info->mlx_info.mlx, info->mlx_info.img_data.img);
-	mlx_destroy_image(info->mlx_info.mlx,
-		info->map_info.texture_info.north_img.img);
-	mlx_destroy_image(info->mlx_info.mlx,
-		info->map_info.texture_info.south_img.img);
-	mlx_destroy_image(info->mlx_info.mlx,
-		info->map_info.texture_info.west_img.img);
-	mlx_destroy_image(info->mlx_info.mlx,
-		info->map_info.texture_info.east_img.img);
-}
-
-void	free_all(t_map_info *map_info)
-{
-	free_2d_char(map_info->input_);
-	free(map_info->texture_info.north_texture_filename_);
-	free(map_info->texture_info.south_texture_filename_);
-	free(map_info->texture_info.west_texture_filename_);
-	free(map_info->texture_info.east_texture_filename_);
-}
-
 void	move_handler(int keycode, t_cub3d *info)
 {
 	t_data	*tmp_img_data;
 
-	if (keycode == 13) // forward (W)
+	if (keycode == 13)
 		walk_forward(&info->player_info, info->map_info.map);
-	else if (keycode == 1) // backward (S)
+	else if (keycode == 1)
 		walk_backward(&info->player_info, info->map_info.map);
-	else if (keycode == 0) // left (A)
+	else if (keycode == 0)
 		walk_left(&info->player_info, info->map_info.map);
-	else if (keycode == 2) // right (D)
+	else if (keycode == 2)
 		walk_right(&info->player_info, info->map_info.map);
-	else if (keycode == 123) // turn left (<-)
+	else if (keycode == 123)
 		turn_left(&info->player_info);
-	else if (keycode == 124) // turn right (->)
+	else if (keycode == 124)
 		turn_right(&info->player_info);
 	if (keycode == 13 || (keycode >= 0 && keycode <= 2)
 		|| keycode == 123 || keycode == 124)
@@ -64,7 +54,7 @@ int	event_handler(int keycode, t_cub3d *info)
 	if (keycode == ESC)
 	{
 		printf("exit\n");
-//		destroy_all_image(info); //this can cause segv... why ?
+		//destroy_all_image(info); //this can cause segv... why ?
 		mlx_destroy_window(info->mlx_info.mlx, info->mlx_info.mlx_win);
 		free_all(&info->map_info);
 		exit(EXIT_SUCCESS);
