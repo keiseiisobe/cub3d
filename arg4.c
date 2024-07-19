@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:08:28 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 19:21:23 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/19 13:20:17 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,5 @@ char	**add_padding(char **map, size_t height, size_t width)
 		padding_full_line(map_padding_, i, &j, width);
 	}
 	map_padding_[i] = NULL;
-	print_padding_map(map_padding_);
 	return (map_padding_);
 }

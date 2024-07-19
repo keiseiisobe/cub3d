@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:19:44 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 13:36:12 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/19 13:20:08 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ void	get_map_info(t_map_info *map_info, char *filename)
 	map_info->input_height = get_input_height(filename);
 	map_info->input_ = get_input(filename, map_info->input_height);
 	get_non_map_info(map_info);
-	print_non_map_info(map_info);
 	map_info->map_height = map_info->input_height - map_info->map_start_index;
 	map_info->map = &map_info->input_[map_info->map_start_index];
-	print_map_info(map_info);
 	return ;
 }

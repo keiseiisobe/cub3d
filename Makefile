@@ -6,7 +6,7 @@
 #    By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/29 19:25:17 by miyazawa.ka       #+#    #+#              #
-#    Updated: 2024/07/16 18:34:02 by miyazawa.ka      ###   ########.fr        #
+#    Updated: 2024/07/19 13:19:16 by miyazawa.ka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,7 @@ SRCS = main.c \
 		arg4.c \
 		arg5.c \
 		xmalloc.c \
-		mlx_utils.c \
-		debug.c
+		mlx_utils.c
 
 OBJS 	= $(SRCS:%.c=%.o)
 

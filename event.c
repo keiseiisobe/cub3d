@@ -6,7 +6,7 @@
 /*   By: miyazawa.kai.0823 <miyazawa.kai.0823@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 02:20:02 by miyazawa.ka       #+#    #+#             */
-/*   Updated: 2024/07/16 13:40:20 by miyazawa.ka      ###   ########.fr       */
+/*   Updated: 2024/07/19 13:10:10 by miyazawa.ka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	event_handler(int keycode, t_cub3d *info)
 	if (keycode == ESC)
 	{
 		printf("exit\n");
-		//destroy_all_image(info); //this can cause segv... why ?
 		mlx_destroy_window(info->mlx_info.mlx, info->mlx_info.mlx_win);
 		free_all(&info->map_info);
 		exit(EXIT_SUCCESS);
@@ -66,7 +65,6 @@ int	event_handler(int keycode, t_cub3d *info)
 int	x_bottun_handler(t_cub3d *info)
 {
 	printf("exit\n");
-//	destroy_all_image(info);
 	mlx_destroy_window(info->mlx_info.mlx, info->mlx_info.mlx_win);
 	free_all(&info->map_info);
 	exit(EXIT_SUCCESS);
