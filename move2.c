@@ -83,5 +83,6 @@ bool	is_not_wall(t_player_info *player_info, char **map, int step_direction)
 	update_pos(player_info, &pos_x, &pos_y, step_direction);
 	map_x = (size_t)pos_x;
 	map_y = (size_t)pos_y;
-	return (map[map_y][map_x] != '1');
+	return (map[(size_t)player_info->pos_y][map_x] != '1'
+		&& map[map_y][(size_t)player_info->pos_x] != '1');
 }
