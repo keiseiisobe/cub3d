@@ -1,6 +1,6 @@
 NO ./texture/png/minecraft_bush.png
 SO ./texture/png/minecraft_wood.png
-WE ./texture/png/minecraft_rock.png
+WE ./texture/xpm/minecraft_rock.xpm
 EA ./texture/png/minecraft_sand.png
 F 74,111,40
 C 126,208,242
