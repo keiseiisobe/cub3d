@@ -1,5 +1,9 @@
 # cub3D
 
+cub3d is inspired by [Wolfenstein](http://users.atw.hu/wolf3d/) by using ray-casting.
+
+![](minecraft.png)
+
 ## Usage
 ```bash
 make
